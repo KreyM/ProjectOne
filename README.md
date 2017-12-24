@@ -1,2 +1,1 @@
-# ProjectOne
-e-commerce website
+# JavaData
