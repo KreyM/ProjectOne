@@ -1,12 +1,16 @@
 package com.controller;
 
-import javax.persistence.Entity;
+import org.springframework.beans.factory.annotation.Autowired;
+
+/*import javax.persistence.Entity;*/
+
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+
 
 import com.DaoImpl.UserDaoImpl;
 import com.model.User;
@@ -15,13 +19,15 @@ import com.model.User;
 
 public class indexController 
 {
+	@Autowired
 	UserDaoImpl userDaoImpl;
+	
 	@RequestMapping("/")
 	public String index()
 	{
 		return "index";
 	}
-	/*@RequestMapping("/goToRegister")
+/*	@RequestMapping("/goToRegister")
 	public String goToRegister()
 	{
 		return "register";
@@ -36,15 +42,17 @@ public class indexController
 		mv.setViewName("register");
 		return mv;
 	}
+	
 	@RequestMapping(value="/saveRegister" , method=RequestMethod.POST)
 	 public ModelAndView saveRegister(@ModelAttribute("user")User user)
 	{
-		ModelAndView mv= new ModelAndView();
+		ModelAndView mav= new ModelAndView();
 		user.setRole("ROLE_USER");
-		userDaoImpl.insertUser(user);
-		mv.setViewName("index");
-		return mv;
-		
-		
+		//userDaoImpl.insertUser(user);
+		mav.setViewName("index");
+		return mav;
 	}
+		
+		
+	
 }

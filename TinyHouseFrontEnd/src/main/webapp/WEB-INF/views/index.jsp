@@ -17,7 +17,7 @@
 </head>
 
 <body> 
-<jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/header.jsp"></jsp:include>
 <h2>Hello World!</h2>
 <div class="container">
 	<div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -29,13 +29,13 @@
 		
 		<div class="carousel-inner">
 			<div class="item active"><!-- class="img-rounded" class="img-responsive center block" -->
-				<img   alt="1" src="C:\\Users\\Krishna Modi\\Desktop\\JAVA Lectures\\171211\\19.png" >
+				<img   alt="1" src="C:\Users\Krishna Modi\Downloads\1.jpg" >
 			</div>
 			<div class="item">
-				<img alt="2"  src="C:\\Users\\Krishna Modi\\Desktop\\JAVA Lectures\\171211\\20.png">
+				<img alt="2"  src="C:\Users\Krishna Modi\Downloads\2.jpg">
 			</div>
 			<div class="item">
-				<img alt="3"  src="C:\\Users\\Krishna Modi\\Desktop\\JAVA Lectures\\171211\\18.png">
+				<img alt="3"  src="C:\Users\Krishna Modi\Downloads\3.jpg">
 			</div>
 		</div>
 		
@@ -50,6 +50,6 @@
   </a>
 	</div>
 </div> 
-<h2>hello</h2>
+<h2>WELCOME</h2>
 </body>
 </html>
