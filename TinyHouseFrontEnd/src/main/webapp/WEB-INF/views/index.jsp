@@ -18,6 +18,7 @@
 
 <body> 
 <jsp:include page="/WEB-INF/views/header.jsp"></jsp:include>
+
 <h2>Hello World!</h2>
 <div class="container">
 	<div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -28,7 +29,7 @@
 		</ol>
 		
 		<div class="carousel-inner">
-			<div class="item active"><!-- class="img-rounded" class="img-responsive center block" -->
+			<div class="item active" class="img-responsive center block"><!-- class="img-rounded" class="img-responsive center block" -->
 				<img   alt="1" src="C:\Users\Krishna Modi\Downloads\1.jpg" >
 			</div>
 			<div class="item">
@@ -51,5 +52,6 @@
 	</div>
 </div> 
 <h2>WELCOME</h2>
+<jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>
 </body>
 </html>

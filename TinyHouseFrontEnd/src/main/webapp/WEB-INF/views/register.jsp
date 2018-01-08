@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
   <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %> 
+  <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
 	<title>Tiny Movement</title>
@@ -22,7 +23,8 @@
 <div class="container">
 	<div class="col-sm-12">
 		<div class="row">
-		<form action="saveRegister">
+		<form:form action="saveRegister" method="post" modelAttribute="user">
+		<!-- <form > -->
 		<div class="form-group">
 		<label> Name :  </label>
 		<input name="name" class="form-control" placeholder= "Enter name"/>
@@ -48,8 +50,9 @@
 		<button type="submit" class="btn btn-lg btn-info">SUBMIT</button>
 		<button type="reset" class="btn btn-lg btn-danger">CANCEL</button>
 		
-		</form>
-		
+<!-- 		</form>
+ -->	
+ </form:form>	
 		</div> <!-- row end -->
 	
 	</div>
