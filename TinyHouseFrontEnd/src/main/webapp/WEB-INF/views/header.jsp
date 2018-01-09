@@ -39,7 +39,7 @@
       </li>
       <li><a href="#">Page 2</a></li>
       <li><a href="#">Page 3</a></li>
-     
+     <li><a href="adding">Admin</a></li>
     </ul>
      <ul class="nav navbar-nav navbar-right">
       <li><a href="goToRegister"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>

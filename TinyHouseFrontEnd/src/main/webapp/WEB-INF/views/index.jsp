@@ -2,7 +2,7 @@
   <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %> 
 <html>
 <head>
-	<title>Front Page</title>
+	<title>Alternate Living</title>
 	
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">

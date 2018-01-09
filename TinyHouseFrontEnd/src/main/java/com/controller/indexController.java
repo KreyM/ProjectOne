@@ -1,12 +1,8 @@
 package com.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-/*import javax.persistence.Entity;*/
-
-
 import org.springframework.stereotype.Controller;
-
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,7 +12,6 @@ import com.DaoImpl.UserDaoImpl;
 import com.model.User;
 
 @Controller
-
 public class indexController 
 {
 	@Autowired
@@ -31,8 +26,8 @@ public class indexController
 	public String goToRegister()
 	{
 		return "register";
-	}
-*/
+	}*/
+
 	@RequestMapping(value="/goToRegister" , method=RequestMethod.GET)
 	 public ModelAndView goToRegister()
 	{
@@ -44,12 +39,21 @@ public class indexController
 	}
 	
 	@RequestMapping(value="/saveRegister" , method=RequestMethod.POST)
-	 public ModelAndView saveRegister(@ModelAttribute("user")User user)
+	 public ModelAndView saveRegister(@ModelAttribute("user")User user, BindingResult result)
 	{
 		ModelAndView mav= new ModelAndView();
+		if(result.hasErrors())
+		{	
+			mav.setViewName("register");
+		
+		}
+		else
+		{
 		user.setRole("ROLE_USER");
+		userDaoImpl.insertUser(user);
 		//userDaoImpl.insertUser(user);
 		mav.setViewName("index");
+		}
 		return mav;
 	}
 		

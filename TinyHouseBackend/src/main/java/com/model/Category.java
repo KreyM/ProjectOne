@@ -8,19 +8,21 @@ import javax.persistence.*;
 
 import org.springframework.stereotype.Component;
 
-
-import javassist.SerialVersionUID;
 @Component
 @Entity
 @Table(name="CategoryTable")
 public class Category implements Serializable
 {
-	private static final long SerialVersionUID=1L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
 	
 	@Id
 	private int cid;
 	private String cname;
-/*have to write 2 statements*/
 	
 	
 	public int getCid() {
@@ -42,8 +44,8 @@ public class Category implements Serializable
 		this.cname = cname;
 	}
 
-
+/*
 	@OneToMany(targetEntity=Product.class, fetch=FetchType.EAGER, mappedBy="Category") // make changes
-	private Set<Product> product=new HashSet<Product>(0);
+	private Set<Product> product=new HashSet<Product>(0);*/
 	
 }

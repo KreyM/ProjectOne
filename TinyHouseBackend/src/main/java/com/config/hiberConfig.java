@@ -17,7 +17,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.DaoImpl.CategoryDaoImpl;
+import com.DaoImpl.SupplierDaoImpl;
 import com.DaoImpl.UserDaoImpl;
+import com.model.Category;
+import com.model.Supplier;
 import com.model.User;
 /*import com.model.User;*/
 
@@ -28,11 +32,11 @@ import com.model.User;
 
 public class hiberConfig {
 	
-private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/tested";
+private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/tested2";
 	private final static String DATABASE_DRIVER = "org.h2.Driver";
 	private final static String DATABASE_DIALECT = "org.hibernate.dialect.H2Dialect";
 	private final static String DATABASE_USERNAME = "sa";
-	private final static String DATABASE_PASSWORD = "";
+	private final static String DATABASE_PASSWORD = "ABC";
 
 	@Bean("dataSource")
 	public DataSource getDataSource() {
@@ -49,24 +53,6 @@ private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/tested";
 		return datasource;
 	}
 
-	/*@Autowired
-	@Bean(name="datasource")
-	
-		public DataSource getH2Data()
-		{
-		System.out.println("hibernate bean initiated");
-		DriverManagerDataSource datasource= new DriverManagerDataSource();
-		
-		datasource.setDriverClassName("org.h2.Driver");
-	
-		datasource.setUrl("jdbc:h2:tcp://localhost/~/BookDb");
-		
-		System.out.println("welcome........");
-		datasource.setUsername("sa");
-		datasource.setPassword(" ");
-		System.out.println("H2 connected........");
-		return datasource;
-		}*/
 	
 	private Properties getHibernateProperties() {
 
@@ -79,28 +65,7 @@ private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/tested";
 		return properties;
 
 	}
-	/*private Properties getHiber()
-	{
-		
-		
-		Properties p= new Properties();
-		p.put("hibernate.dialect","org.hibernate.dialect.H2dialect");
-		p.put("hibernate.hbm2ddl.auto","update");
-		p.put("hibernate.show_sql","true");
-		System.out.println("Tables created..................");
-		return p;
-	}*/
-	/*	@Bean
-		public SessionFactory getSessionFactory(DataSource datasource) {
-			System.out.println("welcome 2.......");
-			LocalSessionFactoryBuilder builder = new LocalSessionFactoryBuilder(datasource);
-			builder.addProperties(getHibernateProperties());
-			builder.addAnnotatedClass(User.class);
-			
-			builder.scanPackages("net.bp.onlineshoppingBackend.dto");
-			
-			return builder.buildSessionFactory();
-		}*/
+	
 	@Autowired
 	@Bean(name="sessionFactory")
 	public SessionFactory getHiberSession(DataSource datasource)
@@ -108,6 +73,9 @@ private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/tested";
 		LocalSessionFactoryBuilder lsfb= new LocalSessionFactoryBuilder(datasource);
 		lsfb.addProperties(getHibernateProperties());
 		lsfb.addAnnotatedClass(User.class);
+		lsfb.addAnnotatedClass(Supplier.class);
+		lsfb.addAnnotatedClass(Category.class);
+		
 		//lsfb.scanPackages("com.User");
 		System.out.println("SESSION FACTORY BEAN.......");
 		return lsfb.buildSessionFactory();
@@ -115,19 +83,33 @@ private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/tested";
 	}
 
 	@Autowired
-	@Bean(name="userDaoImpl")
-	public UserDaoImpl saveUserData(SessionFactory sf)
-	{	System.out.println("UserDaoImpl bean.......");
-		return new UserDaoImpl(sf);
+	@Bean(name="UserDaoImpl")
+	public UserDaoImpl saveUserData(SessionFactory sef)
+	{	
+		return new UserDaoImpl(sef);
+		
+	}
+	@Autowired
+	@Bean(name="CategoryDaoImpl")
+	public CategoryDaoImpl saveCategoryData(SessionFactory sef)
+	{	
+		return new CategoryDaoImpl(sef);
+		
+	}
+	@Autowired
+	@Bean(name="SupplierDaoImpl")
+	public SupplierDaoImpl saveSupplierData(SessionFactory sef)
+	{	
+		return new SupplierDaoImpl(sef);
 		
 	}
 	
-	
+	@Autowired
 	@Bean(name="transactionManager")
-	public HibernateTransactionManager getTrans(SessionFactory sf)
+	public HibernateTransactionManager getTrans(SessionFactory sef)
 	{
-		System.out.println("Transacion bean.......");
-		HibernateTransactionManager tm= new HibernateTransactionManager(sf);
+		System.out.println("Transacion bean");
+		HibernateTransactionManager tm= new HibernateTransactionManager(sef);
 		return tm;
 		}
 }
