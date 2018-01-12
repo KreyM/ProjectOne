@@ -43,6 +43,8 @@
 					
 					<h3 class="input-title"> Supplier Name</h3> <br>
 					<input class="form-control" type="text" name="supplierName" required/>
+					<br>
+					<br>
 					<button class="btn btn-md btn-primary" type="submit">
 					Save
 					</button>
@@ -51,6 +53,8 @@
 					</button>
 				</form>
 				</div>
+
+
 				<div class="tab-pane fade" id="tab2">
 				<form method="post" class="form-signin" action="saveCategory">
 					<span id="reauth-email" class="reauth-email"></span>
@@ -72,7 +76,7 @@
 				
 				
 				<div class="tab-pane fade" id="tab3">
-				<form method="post" class="form-signin" action="/saveProduct" enctype="multipart/form-data">
+				<form method="post" class="form-signin" action="saveProduct" enctype="multipart/form-data">
 					<span id="reauth-email" class="reauth-email"></span>
 					
 					<h3 class="input-title"> Product Name</h3> <br>
@@ -105,7 +109,7 @@
 						<td> Select Category
 						<td><select class="form-control" name="pCategory" required>
 								<option value="">SELECT Category</option>
-								<c:forEach items="${catList}" var="sat">
+								<c:forEach items="${catList}" var="cat">
 								  <option value="${cat.cid}"> ${cat.cname}</option>
 								</c:forEach>
 							</select>
@@ -115,7 +119,7 @@
 					</div>
 					<div class="fileinput fileinput-new" data-provides="fileinput">
 					<th> Product Image</th>
-					<td><input class="form-control" type="file" name="file" accept="image/*"> </td>
+					<td> <input class="form-control" type="file" name="file" accept="image/*"> </td>
 					</div>
 					<br><br>
 					<button class="btn btn-md btn-primary" type="submit">

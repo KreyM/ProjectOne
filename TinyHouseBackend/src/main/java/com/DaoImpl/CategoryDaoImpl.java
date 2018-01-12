@@ -35,7 +35,7 @@ public class CategoryDaoImpl implements CategoryDao {
 	{
 		Session session= sessionFactory.openSession();
 		session.beginTransaction();
-		List<Category> li= session.createQuery("from CategoryTable").list();
+		List<Category> li= session.createQuery("from Category").list();
 		session.getTransaction().commit();
 		return li;
 	}

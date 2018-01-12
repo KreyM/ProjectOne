@@ -39,7 +39,7 @@ public class SupplierDaoImpl implements SupplierDao
 	{
 		Session session= sessionFactory.openSession();
 		session.beginTransaction();
-		List<Supplier> li= session.createQuery("from SupplierTable").list();
+		List<Supplier> li= session.createQuery("from Supplier").list();
 		session.getTransaction().commit();
 		return li;
 	}

@@ -1,12 +1,15 @@
 package com.controller;
 
 import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -76,14 +79,29 @@ public class adminController
 		prod.setImgName(filename);
 		productDaoImpl.insertProduct(prod);
 		System.out.println("File path "+filepath);
-		/*try
+		try
 		{
 			byte imagebyte[]=file.getBytes();
-			BufferedOutputStream
-		}
-		catch()*/
+			BufferedOutputStream fos= new BufferedOutputStream(new FileOutputStream(filepath+"/resources"+filename));
+			fos.write(imagebyte);
+			fos.close();
+			System.out.println("working");
 		
-		return "hi";
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+			System.out.println("not working");
+		}
+		
+		return "adding";
 	}
-
+	
+	@ModelAttribute
+	public void loadingDataInPage(Model m)
+	{
+		m.addAttribute("satList", supplierDaoImpl.retrieve());
+		m.addAttribute("catList",categoryDaoImpl.retrieve());
+		
+	}
 }
