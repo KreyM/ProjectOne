@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
   <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
@@ -25,8 +26,8 @@
 <div class="panel with-nav-tabs panel-warning">
 <div class="panel-heading">
       <ul class="nav nav-tabs">
-      <li class="active"> <a href="#tab2" data-toggle="tab">Supplier</a>
-      <li> <a href="#tab1" data-toggle="tab">Category</a>
+      <li class="active"> <a href="#tab1" data-toggle="tab">Supplier</a>
+      <li> <a href="#tab2" data-toggle="tab">Category</a>
       <li> <a href="#tab3" data-toggle="tab">Product</a>
       
       </ul>
@@ -34,7 +35,7 @@
 
 			<div class="panel-body">
 			<div class="tab-content">
-				<div class="tab-pane fade " id="tab2">
+						<div class="tab-pane fade in active" id="tab1">
 				<form method="post" class="form-signin" action="saveSupplier">
 					<span id="reauth-email" class="reauth-email"></span>
 					<h3 class="input-title"> Supplier Id</h3> <br>
@@ -50,15 +51,15 @@
 					</button>
 				</form>
 				</div>
-				
-				<div class="tab-pane fade in active" id="tab1">
-				<form method="post" class="form-signin" action="<c:url value="/saveCategory"/>">
+				<div class="tab-pane fade" id="tab2">
+				<form method="post" class="form-signin" action="saveCategory">
 					<span id="reauth-email" class="reauth-email"></span>
-					<h3 class="input-title"> Category Id</h3> <br>
+					<h4 class="input-title"> Category Id</h4> <br>
 					<input class="form-control" type="number" name="cid" required/>
 					
-					<h3 class="input-title"> Category Name</h3> <br>
+					<h4 class="input-title"> Category Name</h4> <br>
 					<input class="form-control" type="text" name="cname" required/>
+					<br>
 					<button class="btn btn-md btn-primary" type="submit">
 					Save
 					</button>
@@ -67,15 +68,62 @@
 					</button>
 				</form>
 				</div>
+		
+				
 				
 				<div class="tab-pane fade" id="tab3">
-				<form method="post" class="form-signin" action="/saveProduct">
+				<form method="post" class="form-signin" action="/saveProduct" enctype="multipart/form-data">
 					<span id="reauth-email" class="reauth-email"></span>
-					<h3 class="input-title"> Product Id</h3> <br>
-					<input class="form-control" type="number" name="pid" required/>
 					
 					<h3 class="input-title"> Product Name</h3> <br>
 					<input class="form-control" type="text" name="pname" required/>
+					<h3 class="input-title"> Product Description</h3> <br>
+					<input class="form-control" type="text" name="description" required/>
+					<h3 class="input-title"> Product Price</h3> <br>
+					<input class="form-control" type="number" name="price" required/>
+					<h3 class="input-title"> Product Stock</h3> <br>
+					<input class="form-control" type="number" name="stock" required/>
+					
+					<div class="form-group">
+					<table>
+					<tr>
+						<td> Select Supplier
+						<td><select class="form-control" name="pSupplier" required>
+								<option value="">SELECT SUPPLIER</option>
+								<c:forEach items="${satList}" var="sat">
+								  <option value="${sat.sid}"> ${sat.supplierName}</option>
+								</c:forEach>
+							</select>
+					</td>
+					</tr>
+					</table>
+					</div>
+					
+					<div class="form-group">
+					<table>
+					<tr>
+						<td> Select Category
+						<td><select class="form-control" name="pCategory" required>
+								<option value="">SELECT Category</option>
+								<c:forEach items="${catList}" var="sat">
+								  <option value="${cat.cid}"> ${cat.cname}</option>
+								</c:forEach>
+							</select>
+					</td>
+					</tr>
+					</table>
+					</div>
+					<div class="fileinput fileinput-new" data-provides="fileinput">
+					<th> Product Image</th>
+					<td><input class="form-control" type="file" name="file" accept="image/*"> </td>
+					</div>
+					<br><br>
+					<button class="btn btn-md btn-primary" type="submit">
+					Save
+					</button>
+					<button class="btn btn-md btn-warning" type="reset">
+					Clear
+					</button>
 				</form>
 				</div>
 			</div>

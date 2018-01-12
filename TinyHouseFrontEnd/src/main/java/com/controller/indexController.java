@@ -32,7 +32,6 @@ public class indexController
 	 public ModelAndView goToRegister()
 	{
 		ModelAndView mv= new ModelAndView();
-	//	return "register";
 		mv.addObject("user", new User());
 		mv.setViewName("register");
 		return mv;

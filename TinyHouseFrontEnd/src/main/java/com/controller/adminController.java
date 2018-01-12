@@ -1,17 +1,20 @@
 package com.controller;
 
+import java.io.BufferedOutputStream;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.DaoImpl.*;
-import com.model.Supplier;
-
-import javax.validation.Valid;
+import com.DaoImpl.CategoryDaoImpl;
+import com.DaoImpl.ProductDaoImpl;
+import com.DaoImpl.SupplierDaoImpl;
+import com.model.*;
 
 @Controller
 public class adminController 
@@ -22,6 +25,8 @@ public class adminController
 	 @Autowired
 	 CategoryDaoImpl categoryDaoImpl;
 	 
+	 @Autowired
+	 ProductDaoImpl productDaoImpl ;
 	@RequestMapping("/adding")
 	public String adding()
 	{
@@ -39,6 +44,46 @@ public class adminController
 		supplierDaoImpl.insertSupplier(ss);
 		mv.setViewName("adding");
 		return mv;
+	}
+	
+	@RequestMapping(value="/saveCategory", method=RequestMethod.POST)
+	@Transactional
+	public ModelAndView saveCategoryData(@RequestParam("cid")int cid, @RequestParam("cname")String cname )
+	{
+		ModelAndView mv= new ModelAndView();
+		Category cc = new Category();
+		cc.setCid(cid);
+		cc.setCname(cname);
+		categoryDaoImpl.insertCategory(cc);
+		mv.setViewName("adding");
+		return mv;
+	}
+	
+	@RequestMapping(value="/saveProduct", method=RequestMethod.POST)
+	@Transactional 
+	public String saveProduct(HttpServletRequest request, @RequestParam("file")MultipartFile file)
+	{
+		
+		Product prod = new Product();
+		prod.setPname(request.getParameter("pname"));
+		prod.setPrice(Double.parseDouble(request.getParameter("price")));
+		prod.setDescription(request.getParameter("description"));
+		prod.setStock(Integer.parseInt(request.getParameter("stock")));
+		prod.setCategory(categoryDaoImpl.findByCategoryId(Integer.parseInt(request.getParameter("pCategory"))));
+		prod.setSupplier(supplierDaoImpl.findBySupplierId(Integer.parseInt(request.getParameter("pSupplier"))));
+		String filepath= request.getSession().getServletContext().getRealPath("/");
+		String filename=file.getOriginalFilename();
+		prod.setImgName(filename);
+		productDaoImpl.insertProduct(prod);
+		System.out.println("File path "+filepath);
+		/*try
+		{
+			byte imagebyte[]=file.getBytes();
+			BufferedOutputStream
+		}
+		catch()*/
+		
+		return "hi";
 	}
 
 }

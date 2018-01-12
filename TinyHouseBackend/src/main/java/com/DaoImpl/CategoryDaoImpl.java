@@ -1,4 +1,7 @@
 package com.DaoImpl;
+import java.util.List;
+
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,32 @@ public class CategoryDaoImpl implements CategoryDao {
 		session.saveOrUpdate(category);
 		session.getTransaction().commit();
 	}
-
+	
+	public List<Category> retrieve()
+	{
+		Session session= sessionFactory.openSession();
+		session.beginTransaction();
+		List<Category> li= session.createQuery("from CategoryTable").list();
+		session.getTransaction().commit();
+		return li;
+	}
+	
+	public Category findByCategoryId(int cid)
+	{
+		Session session= sessionFactory.openSession();
+		Category c=null;
+		try
+		{
+		session.beginTransaction();
+		c=session.get(Category.class, cid);
+		session.getTransaction().commit();
+		}
+		catch(HibernateException e)
+		{
+			System.out.println(e.getMessage());
+			session.getTransaction().rollback();
+		}
+		return c;
+	}
 
 }

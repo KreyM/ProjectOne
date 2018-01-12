@@ -27,9 +27,16 @@ public class Supplier implements Serializable
 	}
 	public void setSupplierName(String supplierName) {
 		this.supplierName = supplierName;
-	}/*
-	@OneToMany(targetEntity=Product.class, fetch=FetchType.EAGER)
-	private Set<Product> product= new HashSet<Product>(0);*/
+	}
+	@OneToMany(targetEntity=Product.class, fetch=FetchType.EAGER, mappedBy="supplier")
+	private Set<Product> product= new HashSet<Product>(0);
+	
+	public Set<Product> getProduct() {
+		return product;
+	}
+	public void setProduct(Set<Product> product) {
+		this.product = product;
+	}
 	/*
 	private Set<Product> product=new HashSet<Product>(0);*/
 	public int getSid() {

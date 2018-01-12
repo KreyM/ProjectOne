@@ -5,25 +5,25 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-/*import org.apache.commons.dbcp2.BasicDataSource;*/
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-/*import org.springframework.jdbc.datasource.DriverManagerDataSource;
-*/import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.DaoImpl.CategoryDaoImpl;
+import com.DaoImpl.ProductDaoImpl;
 import com.DaoImpl.SupplierDaoImpl;
 import com.DaoImpl.UserDaoImpl;
 import com.model.Category;
+import com.model.Product;
 import com.model.Supplier;
 import com.model.User;
-/*import com.model.User;*/
+
 
 
 @Configuration
@@ -75,6 +75,7 @@ private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/tested2";
 		lsfb.addAnnotatedClass(User.class);
 		lsfb.addAnnotatedClass(Supplier.class);
 		lsfb.addAnnotatedClass(Category.class);
+		lsfb.addAnnotatedClass(Product.class);
 		
 		//lsfb.scanPackages("com.User");
 		System.out.println("SESSION FACTORY BEAN.......");
@@ -103,6 +104,14 @@ private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/tested2";
 		return new SupplierDaoImpl(sef);
 		
 	}
+
+	@Autowired
+	@Bean(name="ProductDaoImpl")
+	public ProductDaoImpl saveProductData(SessionFactory sef)
+	{	
+		return new ProductDaoImpl(sef);
+		
+	}
 	
 	@Autowired
 	@Bean(name="transactionManager")
@@ -114,7 +123,7 @@ private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/tested2";
 		}
 }
 
-/*// 08-01-18 to copy hemangi code
+/*// 08-01-18 to copy h code
  * package com.config;
  
 
