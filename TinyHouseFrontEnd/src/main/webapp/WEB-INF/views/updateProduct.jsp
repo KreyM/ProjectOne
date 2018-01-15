@@ -14,18 +14,22 @@
 <body>
 <jsp:include page="header.jsp"></jsp:include>
 <div class="container"><br>
- <c:url value="/productUpdate" var="var"></c:url>
-	<form method="post" class="form-signin" action="saveProduct" enctype="multipart/form-data">
+ <c:url value="/productUpdate" var="pru"></c:url>
+	<form method="post" action="productUpdate" enctype="multipart/form-data">
 		<span id="reauth-email" class="reauth-email"></span>
+		<input type="hidden" name="pid" value="${prod.pid }">
 		
 		<h3 class="input-title"> Product Name</h3> <br>
-		<input class="form-control" type="text" name="pname" required/>
+		<input value="${prod.pname }" type="text" name="pname" required/>
+		
 		<h3 class="input-title"> Product Description</h3> <br>
-		<input class="form-control" type="text" name="description" required/>
+		<input value="${prod.description }" type="text" name="description" required/>
+		
 		<h3 class="input-title"> Product Price</h3> <br>
-		<input class="form-control" type="number" name="price" required/>
+		<input value="${prod.price }" type="number" name="price" required/>
+		
 		<h3 class="input-title"> Product Stock</h3> <br>
-		<input class="form-control" type="number" name="stock" required/>
+		<input value="${prod.stock }" type="number" name="stock" required/>
 					
 					<div class="form-group">
 					<table>
@@ -62,25 +66,13 @@
 					</div>
 					<br><br>
 					<button class="btn btn-md btn-primary" type="submit">
-					Save
+					Update
 					</button>
 					<button class="btn btn-md btn-warning" type="reset">
-					Clear
+					Cancel
 					</button>
 				</form>
 				</div>
-			</div>
-			</div>
-		</div>
-		</div>
-		
-		</div>
-	
-	</div>
-	
-	</div>
-
-
-</div>
+			
 </body>
 </html>

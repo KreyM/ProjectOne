@@ -139,4 +139,54 @@ public class adminController
 		return "redirect:/productList?del";
 	
 	}
+	/*157*/
+	@RequestMapping("/updateProd")
+	public ModelAndView updateProduct(@RequestParam("pid") int pid)
+	{
+		ModelAndView mav =new ModelAndView();
+		Product p=productDaoImpl.findByPID(pid);
+		
+		mav.addObject("prod",p);
+		mav.addObject("catList",categoryDaoImpl.retrieve());
+		mav.addObject("satList", supplierDaoImpl.retrieve());
+		mav.setViewName("updateProduct");
+		return mav;
+	/*	167*/
+	}
+	
+	@RequestMapping(value="/updateProduct", method=RequestMethod.POST)
+/*172*/public String updateProd(HttpServletRequest request, @RequestParam("file")MultipartFile file)
+	{
+		String pid= request.getParameter("pid"); 
+		Product prod = new Product();
+		prod.setPname(request.getParameter("pname"));
+		prod.setPrice(Double.parseDouble(request.getParameter("price")));
+		prod.setDescription(request.getParameter("description"));
+		prod.setStock(Integer.parseInt(request.getParameter("stock")));
+		String cat=request.getParameter("pCategory");
+		String sat=request.getParameter("pSupplier");
+		prod.setCategory(categoryDaoImpl.findByCategoryId(Integer.parseInt(cat)));
+		prod.setSupplier(supplierDaoImpl.findBySupplierId(Integer.parseInt(sat)));
+		String filepath= request.getSession().getServletContext().getRealPath("/");
+		String filename=file.getOriginalFilename();
+		prod.setImgName(filename);
+		productDaoImpl.update(prod);;
+		System.out.println("File path "+filepath);
+		try
+		{
+			byte imagebyte[]=file.getBytes();
+			BufferedOutputStream fos= new BufferedOutputStream(new FileOutputStream(filepath+"/resources"+filename));
+			fos.write(imagebyte);
+			fos.close();
+			System.out.println("working");
+		
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+			System.out.println("not working");
+		}
+		
+		return "redirect:/productList?update";
+	}
 }
