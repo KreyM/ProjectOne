@@ -102,6 +102,41 @@ public class adminController
 	{
 		m.addAttribute("satList", supplierDaoImpl.retrieve());
 		m.addAttribute("catList",categoryDaoImpl.retrieve());
-		
+		m.addAttribute("prodList",productDaoImpl.retrieve());
+	}
+	
+	@RequestMapping("/productList")
+	public ModelAndView prodlist() 
+	{
+		ModelAndView mav =new ModelAndView();
+		mav.addObject("prodList",productDaoImpl.retrieve());
+		mav.setViewName("productAdmin");
+		return mav;
+	}
+	
+	@RequestMapping("/supplierList")
+	public ModelAndView supplierList() 
+	{
+		ModelAndView mav =new ModelAndView();
+		mav.addObject("satList",supplierDaoImpl.retrieve());
+		mav.setViewName("supplierAdmin");
+		return mav;
+	}
+	
+	@RequestMapping("/categoryList")
+	public ModelAndView categoryList() 
+	{
+		ModelAndView mav =new ModelAndView();
+		mav.addObject("catList",categoryDaoImpl.retrieve());
+		mav.setViewName("categoryAdmin");
+		return mav;
+	}
+	
+	@RequestMapping("/deleteProduct/{pid}")
+	public String deleteProduct(@PathVariable("pid")int pid) 
+	{
+		productDaoImpl.deleteProduct(pid);
+		return "redirect:/productList?del";
+	
 	}
 }

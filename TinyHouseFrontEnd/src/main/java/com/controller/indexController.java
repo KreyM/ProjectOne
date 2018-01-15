@@ -2,12 +2,13 @@ package com.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-
-
+import com.DaoImpl.CategoryDaoImpl;
+import com.DaoImpl.ProductDaoImpl;
 import com.DaoImpl.UserDaoImpl;
 import com.model.User;
 
@@ -17,6 +18,11 @@ public class indexController
 	@Autowired
 	UserDaoImpl userDaoImpl;
 	
+	@Autowired
+	ProductDaoImpl productDaoImpl;
+	
+	@Autowired
+	CategoryDaoImpl categoryDaoImpl;
 	@RequestMapping("/")
 	public String index()
 	{
@@ -55,7 +61,21 @@ public class indexController
 		}
 		return mav;
 	}
-		
+	
+	@RequestMapping(value="/productCustList")
+	public ModelAndView getCustTable(@RequestParam("cid") int cid)
+	{
+		ModelAndView mav= new ModelAndView();
+		mav.addObject("prodList", productDaoImpl.getProdBycatId(cid));
+		mav.setViewName("productCustList");
+		return mav;
+	}
+	
+	@ModelAttribute
+	public void getData(Model m)
+	{
+		m.addAttribute("catList", categoryDaoImpl.retrieve());
+	}
 		
 	
 }

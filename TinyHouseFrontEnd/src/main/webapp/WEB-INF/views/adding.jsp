@@ -106,7 +106,7 @@
 					<div class="form-group">
 					<table>
 					<tr>
-						<td> Select Category
+						<td> Select Category</td>
 						<td><select class="form-control" name="pCategory" required>
 								<option value="">SELECT Category</option>
 								<c:forEach items="${catList}" var="cat">
