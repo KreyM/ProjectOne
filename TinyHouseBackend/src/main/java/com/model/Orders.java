@@ -10,11 +10,14 @@ import org.springframework.stereotype.Component;
 @Entity
 public class Orders implements Serializable 
 {
+	@Id
+	@GeneratedValue
 	private int OrderId;
 	
-	@OneToMany
+	@ManyToOne
 	@JoinColumn
 	private User user;
+	
 	private String payment;
 
 

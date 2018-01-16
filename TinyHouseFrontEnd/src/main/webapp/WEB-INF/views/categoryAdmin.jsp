@@ -43,8 +43,8 @@
    		 	<td> <c:out value="${p.cname }"></c:out></td>
    		 	 <td class="span4"> 
    		   <c:set var="contextRoot" value="${pageContext.request.contextPath}"/>
-				<a class="btn btn-info" role="button" href="#">EDIT</a>
-				<a class="btn btn-danger" role="button" href="#">DELETE</a>
+				<a class="btn btn-info" role="button" href="${contextRoot }/admin/Edit">EDIT</a>
+				<a class="btn btn-danger" role="button" href="${contextRoot }/admin/Delete">DELETE</a>
 				
 				</td>
 				

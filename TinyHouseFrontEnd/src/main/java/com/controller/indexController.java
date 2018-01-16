@@ -28,11 +28,12 @@ public class indexController
 	{
 		return "index";
 	}
-/*	@RequestMapping("/goToRegister")
-	public String goToRegister()
+	@RequestMapping("/index")
+	public String home()
 	{
-		return "register";
-	}*/
+		return "index";
+	}
+	
 
 	@RequestMapping(value="/goToRegister" , method=RequestMethod.GET)
 	 public ModelAndView goToRegister()
@@ -77,5 +78,26 @@ public class indexController
 		m.addAttribute("catList", categoryDaoImpl.retrieve());
 	}
 		
+	@RequestMapping("/goToLogin")
+	public String goToLogin()
+	{
+		return "login";
+	}
 	
+	@RequestMapping("/userLogged")
+	public String userLogged()
+	{
+		return "redirect:/index";
+	}
+	
+	@RequestMapping("/error")
+	public String userError()
+	{
+		return "error";
+	}
+	@RequestMapping("/goToReLogin")
+	public String goToReLogin()
+	{
+		return "redirect:/goToLogin";
+	}
 }

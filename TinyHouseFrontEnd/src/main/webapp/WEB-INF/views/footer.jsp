@@ -19,12 +19,17 @@
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 </head>
-<body>
-footer
+<body >
+
 <nav class="navbar navbar-inverse"  >
 <div class="container-fluid">
 <div class="navbar fixed-bottom" >
-  <a class="navbar-brand" href="#">Fixed bottom</a>
+  <a class="navbar-brand" href="#">TINY HOUSE </a>
+  <ul class="nav navbar-nav">
+      <li class="active"><a href="/">Home</a></li>
+    <li><a href="/admin/adding">Admin</a></li>  
+    
+  </ul>    
 </div>
 </div>
 </nav>

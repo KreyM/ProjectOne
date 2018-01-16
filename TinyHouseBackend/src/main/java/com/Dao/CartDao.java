@@ -1,5 +1,9 @@
 package com.Dao;
 
-public interface CartDao {
+import com.model.Cart;
+
+public interface CartDao 
+{
+	public void insertCart (Cart cart);
 
 }

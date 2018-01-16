@@ -79,9 +79,12 @@ public class ProductDaoImpl implements ProductDao
 	
 	public void update(Product p)
 	{
+		System.out.println("update enter");
 		Session session= sessionFactory.openSession();
 		session.beginTransaction();
+		
 		session.update(p);
+		System.out.println("update entry 2");
 		session.getTransaction().commit();
 	}
 	

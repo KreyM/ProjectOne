@@ -20,6 +20,7 @@ import com.DaoImpl.SupplierDaoImpl;
 import com.model.*;
 
 @Controller
+@RequestMapping("/admin")
 public class adminController 
 {
 	@Autowired 
@@ -157,7 +158,8 @@ public class adminController
 	@RequestMapping(value="/updateProduct", method=RequestMethod.POST)
 /*172*/public String updateProd(HttpServletRequest request, @RequestParam("file")MultipartFile file)
 	{
-		String pid= request.getParameter("pid"); 
+		int pid= request.getIntHeader("pid");
+				/*getParameter("pid"); */
 		Product prod = new Product();
 		prod.setPname(request.getParameter("pname"));
 		prod.setPrice(Double.parseDouble(request.getParameter("price")));
@@ -187,6 +189,6 @@ public class adminController
 			System.out.println("not working");
 		}
 		
-		return "redirect:/productList?update";
+		return "redirect:/productList?updateProd";
 	}
 }
