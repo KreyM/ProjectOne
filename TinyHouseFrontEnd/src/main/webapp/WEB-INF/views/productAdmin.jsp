@@ -51,7 +51,7 @@
    		 	<td> <c:out value="${p.category.cname }"></c:out></td>
    		 	<td> <c:out value="${p.stock }"></c:out></td>
    		 	<td> <c:out value="${p.price }"></c:out></td>
-   		 	<td> <img src="${pageContext.request.contextPath}/resouces/${p.imgName}" height="50px" width="50px"></td>
+   		 	<td> <img src="D:/frontend/TinyHouseFrontEnd/src/main/resources/${p.imgName}" height="50px" width="50px"></td>
    		   <td class="span4"> 
    		   <c:set var="contextRoot" value="${pageContext.request.contextPath}"/>
 				<a class="btn btn-info" role="button" href="${contextRoot }/admin/updateProd?pid= <c:out value="${p.pid }" ></c:out>"> Update/ Edit</a> <%--  }"></c:url>'>Update</a> --%>

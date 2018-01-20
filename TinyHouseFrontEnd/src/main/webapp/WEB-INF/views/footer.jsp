@@ -26,12 +26,32 @@
 <div class="navbar fixed-bottom" >
   <a class="navbar-brand" href="#">TINY HOUSE </a>
   <ul class="nav navbar-nav">
-      <li class="active"><a href="/">Home</a></li>
-    <li><a href="/admin/adding">Admin</a></li>  
+      <li class="active"><a href="/TinyHouseFrontEnd">Home</a></li>
+    <li><a href="admin/adding">Admin</a></li>  
+     <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin List
+        <span class="caret"></span> </a>
+        <ul  class="dropdown-menu">
+        <li><a href="${pageContext.request.contextPath }/admin/productList">Product</a></li>
+         <li><a href="${pageContext.request.contextPath }/admin/supplierList">Supplier</a></li>
+         <li><a href="${pageContext.request.contextPath }/admin/categoryList">Category</a></li>
+		</ul>
+		</li>
+  </ul>  
+  <ul class="nav navbar-nav navbar-right">
+
+   
+	 <li><a href="https://www.facebook.com/"> <span class="fa fa-facebook"> </span> Facebook </a> </li>
+	 <li><a href="https://twitter.com/"> <span class="fa fa-twitter"> </span> Twitter </a> </li>
+	 <li><a href="https://in.linkedin.com/"> <span class="fa fa-linkedin"> LinkedIn </span></a>
+	 <li><a href="https://in.pinterest.com/"> <span class="fa fa-pinterest"> Pinterest </span></a>
+	 <li><a href=""> <span class=""> </span></a>
+	 <li><a href=""> <span class=""> </span></a>
+	 <li><a href=""> <span class=""> </span></a>
+    </ul>
     
-  </ul>    
 </div>
 </div>
-</nav>
+	</nav>
 </body>
 </html>

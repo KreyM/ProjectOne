@@ -15,7 +15,10 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.DaoImpl.CartDaoImpl;
 import com.DaoImpl.CategoryDaoImpl;
+import com.DaoImpl.OrderDaoImpl;
+import com.DaoImpl.OrdersDaoImpl;
 import com.DaoImpl.ProductDaoImpl;
 import com.DaoImpl.SupplierDaoImpl;
 import com.DaoImpl.UserDaoImpl;
@@ -111,6 +114,20 @@ private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/tested2";
 	{	
 		return new ProductDaoImpl(sef);
 		
+	}
+	
+	@Autowired
+	@Bean(name="CartDaoImpl")
+	public CartDaoImpl saveCartData(SessionFactory sf)
+	{
+		return new CartDaoImpl(sf);
+	}
+	
+	@Autowired
+	@Bean(name="OrderDaoImpl")
+	public OrdersDaoImpl saveOrdersData(SessionFactory sf)
+	{
+		return new OrdersDaoImpl(sf);
 	}
 	
 	@Autowired

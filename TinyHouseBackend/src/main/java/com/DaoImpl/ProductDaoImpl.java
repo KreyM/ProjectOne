@@ -14,6 +14,7 @@ public class ProductDaoImpl implements ProductDao
 {
 	@Autowired
 	SessionFactory sessionFactory;
+	
 	@Autowired
 	public ProductDaoImpl(SessionFactory sessionFactory)
 	{
@@ -25,7 +26,6 @@ public class ProductDaoImpl implements ProductDao
 		Session session= sessionFactory.openSession();
 		session.beginTransaction();
 		session.persist(product);
-		/*session.saveOrUpdate(product);*/
 		session.getTransaction().commit();
 	}
 	
@@ -33,7 +33,7 @@ public class ProductDaoImpl implements ProductDao
 	{
 		Session session=sessionFactory.openSession();
 		session.beginTransaction();
-		List<Product> li=session.createQuery("from Product").list();
+		List<Product> li =session.createQuery("from Product").list();
 		session.getTransaction().commit();
 		return li;
 	}

@@ -30,7 +30,7 @@
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="/TinyHouseFrontEnd">Home</a></li>
-      <!-- <li class="active"><a href="adminList">Admin List</a></li> -->
+      <!-- <li class="active"><a href="/admin/adminList">Admin List</a></li> -->
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin List
         <span class="caret"></span> </a>
@@ -55,11 +55,19 @@
       
       
       <li><a href="#">Page 3</a></li>
-     <li><a href="adding">Admin</a></li>
+     <li><a href="admin/adding">Admin</a></li>
     </ul>
+    
      <ul class="nav navbar-nav navbar-right">
+     <c:if test="${pageContext.request.userPrincipal.name==null }">
       <li><a href="goToRegister"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
       <li><a href="goToLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+     </c:if>
+     
+     <c:if test="${pageContext.request.userPrincipal.name!=null }">
+    	 <li><a>Let's Go Tiny,${pageContext.request.userPrincipal.name} </a></li>
+     		<li><a href="${pageContext.request.contextPath }/logout"> Logout, Bye</a></li>
+     </c:if>
     </ul>
   </div>
   

@@ -46,7 +46,7 @@ public class adminController
 		ss.setSid(sid);
 		ss.setSupplierName(supplierName);
 		supplierDaoImpl.insertSupplier(ss);
-		mv.setViewName("adding");
+		mv.setViewName("modal");
 		return mv;
 	}
 	
@@ -59,7 +59,7 @@ public class adminController
 		cc.setCid(cid);
 		cc.setCname(cname);
 		categoryDaoImpl.insertCategory(cc);
-		mv.setViewName("adding");
+		mv.setViewName("modal");
 		return mv;
 	}
 	
@@ -95,7 +95,7 @@ public class adminController
 			System.out.println("not working");
 		}
 		
-		return "adding";
+		return "modal";
 	}
 	
 	@ModelAttribute
@@ -154,8 +154,9 @@ public class adminController
 		return mav;
 	/*	167*/
 	}
-	
-	@RequestMapping(value="/updateProduct", method=RequestMethod.POST)
+		
+	@RequestMapping(value="/productUpdate", method=RequestMethod.POST)
+	@Transactional
 /*172*/public String updateProd(HttpServletRequest request, @RequestParam("file")MultipartFile file)
 	{
 		int pid= request.getIntHeader("pid");
@@ -189,6 +190,6 @@ public class adminController
 			System.out.println("not working");
 		}
 		
-		return "redirect:/productList?updateProd";
+		return "redirect:/productList?update";
 	}
 }
