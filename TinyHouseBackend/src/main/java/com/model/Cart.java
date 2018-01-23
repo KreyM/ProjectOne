@@ -21,11 +21,9 @@ public class Cart implements Serializable
 	private String cartImage;
 	private String cartProductName;
 	public Cart()
-	{
-		
-	}
+	{}
 	
-	public Cart (int cartId,int cartProductId, User cartUserDetails, double cartPrice, int cartStock, String cartProductName  )
+	public Cart(int cartId,int cartProductId, User cartUserDetails, double cartPrice, int cartStock, String cartProductName  )
 	{
 		this.cartId= cartId;
 		this.cartProductId=cartProductId;

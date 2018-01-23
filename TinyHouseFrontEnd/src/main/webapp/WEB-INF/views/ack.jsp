@@ -7,6 +7,8 @@
 <title>Acknowlegment page</title>
 </head>
 <body>
+<h1  align="center" font-style: italic ; font-family: cursive;">Thank You</h1>
+<h2 align="center">Payment Made</h2>
 
 </body>
 </html>

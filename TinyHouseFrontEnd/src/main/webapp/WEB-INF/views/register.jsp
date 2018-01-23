@@ -24,12 +24,14 @@
 	<div class="col-sm-12">
 		<div class="row">
 		<form:form action="saveRegister" method="post" modelAttribute="user">
-		<!-- <form > -->
+<!-- <form > -->
+<form:errors path="name" cssClass="err"/>
 		<div class="form-group">
 		<label> Name :  </label>
 		<input name="name" class="form-control" placeholder= "Enter name"/>
 		</div>
 		<div class="form-group">
+		<form:errors path="email" cssClass="err"/>
 		<label> Email :  </label>
 		<input name="email" class="form-control" placeholder= "Enter Email"/>
 		</div>
@@ -42,6 +44,7 @@
 		<input name="address" class="form-control" placeholder= "Enter Address"/>
 		</div>
 		<div class="form-group">
+		<form:errors path="phone" cssClass="err"/>
 		<label> Phone Number :  </label>
 		<input name="phone" class="form-control" placeholder= "Enter Phone Number">
 		</div>

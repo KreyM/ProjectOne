@@ -54,7 +54,7 @@
    		 	<td> <img src="D:/frontend/TinyHouseFrontEnd/src/main/resources/${p.imgName}" height="50px" width="50px"></td>
    		   <td class="span4"> 
    		   <c:set var="contextRoot" value="${pageContext.request.contextPath}"/>
-				<a class="btn btn-info" role="button" href="${contextRoot }/admin/updateProd?pid= <c:out value="${p.pid }" ></c:out>"> Update/ Edit</a> <%--  }"></c:url>'>Update</a> --%>
+				<a class="btn btn-info" role="button" href="${contextRoot }/admin/updateProd?pid= <c:out value="${p.pid }" ></c:out>">  Edit</a> <%--  }"></c:url>'>Update</a> --%>
 				<a class="btn btn-danger" role="button" href='<c:url value="/admin/deleteProduct/${p.pid }"></c:url>'>DELETE</a>
 				
 				</td>

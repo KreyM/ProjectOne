@@ -77,15 +77,21 @@ public class ProductDaoImpl implements ProductDao
 		return prod;	
 	}
 	
-	public void update(Product p)
+	public void update(Product prod)
 	{
 		System.out.println("update enter");
 		Session session= sessionFactory.openSession();
 		session.beginTransaction();
-		
-		session.update(p);
-		System.out.println("update entry 2");
+	
+		session.update(prod);
+		System.out.println("update entry 2");System.out.println("somewhat");
 		session.getTransaction().commit();
+		/*catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}*/
+		System.out.println("somewhat");
 	}
 	
 	public void deleteProduct(int pid)

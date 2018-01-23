@@ -1,7 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
-<%-- <%@ taglib prefix="nav" uri="/WEB-INF/taglibs/navigation.tld" %> --%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%--  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  --%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -31,6 +30,9 @@
     <ul class="nav navbar-nav">
       <li class="active"><a href="/TinyHouseFrontEnd">Home</a></li>
       <!-- <li class="active"><a href="/admin/adminList">Admin List</a></li> -->
+     
+     
+     <security:authorize access="hasRole('ROLE_ADMIN')">
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin List
         <span class="caret"></span> </a>
@@ -40,7 +42,7 @@
          <li><a href="${pageContext.request.contextPath }/admin/categoryList">Category</a></li>
 		</ul>
 		</li>	         
-              
+            </security:authorize>  
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">
             Category Choice <span class="caret"></span>
@@ -51,17 +53,21 @@
              	<li><a href="${pageContext.request.contextPath }/productCustList?cid=${catVal.cid}">${catVal.cname}</a></li>
              </c:forEach>
           </ul>
+          
         </li>
       
       
       <li><a href="#">Page 3</a></li>
+<security:authorize access="hasRole('ROLE_ADMIN')">
      <li><a href="admin/adding">Admin</a></li>
+</security:authorize>
     </ul>
     
      <ul class="nav navbar-nav navbar-right">
-     <c:if test="${pageContext.request.userPrincipal.name==null }">
+     <c:if test="${pageContext.request.userPrincipal.name==null }"> 
+     <li><a href="goToLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
       <li><a href="goToRegister"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li><a href="goToLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+     
      </c:if>
      
      <c:if test="${pageContext.request.userPrincipal.name!=null }">

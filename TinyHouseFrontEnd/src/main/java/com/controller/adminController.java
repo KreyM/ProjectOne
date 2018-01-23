@@ -137,7 +137,7 @@ public class adminController
 	public String deleteProduct(@PathVariable("pid")int pid) 
 	{
 		productDaoImpl.deleteProduct(pid);
-		return "redirect:/productList?del";
+		return "deleteModal";
 	
 	}
 	/*157*/
@@ -159,22 +159,26 @@ public class adminController
 	@Transactional
 /*172*/public String updateProd(HttpServletRequest request, @RequestParam("file")MultipartFile file)
 	{
+		System.out.println("somewhat");
 		int pid= request.getIntHeader("pid");
 				/*getParameter("pid"); */
 		Product prod = new Product();
 		prod.setPname(request.getParameter("pname"));
+		System.out.println("somewhat");
 		prod.setPrice(Double.parseDouble(request.getParameter("price")));
 		prod.setDescription(request.getParameter("description"));
 		prod.setStock(Integer.parseInt(request.getParameter("stock")));
 		String cat=request.getParameter("pCategory");
 		String sat=request.getParameter("pSupplier");
+		System.out.println("somewhat");
 		prod.setCategory(categoryDaoImpl.findByCategoryId(Integer.parseInt(cat)));
 		prod.setSupplier(supplierDaoImpl.findBySupplierId(Integer.parseInt(sat)));
 		String filepath= request.getSession().getServletContext().getRealPath("/");
 		String filename=file.getOriginalFilename();
-		prod.setImgName(filename);
-		productDaoImpl.update(prod);;
+		prod.setImgName(filename);System.out.println("b4 b4 somewhat after update");
+		productDaoImpl.update(prod);System.out.println(" b4 somewhat after update");
 		System.out.println("File path "+filepath);
+		System.out.println("somewhat after update");
 		try
 		{
 			byte imagebyte[]=file.getBytes();
@@ -190,6 +194,7 @@ public class adminController
 			System.out.println("not working");
 		}
 		
-		return "redirect:/productList?update";
+		return "modal";
 	}
+	
 }

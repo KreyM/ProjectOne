@@ -17,12 +17,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.DaoImpl.CartDaoImpl;
 import com.DaoImpl.CategoryDaoImpl;
-import com.DaoImpl.OrderDaoImpl;
+
+
 import com.DaoImpl.OrdersDaoImpl;
 import com.DaoImpl.ProductDaoImpl;
 import com.DaoImpl.SupplierDaoImpl;
 import com.DaoImpl.UserDaoImpl;
+import com.model.Cart;
 import com.model.Category;
+import com.model.Orders;
 import com.model.Product;
 import com.model.Supplier;
 import com.model.User;
@@ -79,6 +82,8 @@ private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/tested2";
 		lsfb.addAnnotatedClass(Supplier.class);
 		lsfb.addAnnotatedClass(Category.class);
 		lsfb.addAnnotatedClass(Product.class);
+		lsfb.addAnnotatedClass(Cart.class);
+		lsfb.addAnnotatedClass(Orders.class);
 		
 		//lsfb.scanPackages("com.User");
 		System.out.println("SESSION FACTORY BEAN.......");
@@ -124,7 +129,7 @@ private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/tested2";
 	}
 	
 	@Autowired
-	@Bean(name="OrderDaoImpl")
+	@Bean(name="OrdersDaoImpl")
 	public OrdersDaoImpl saveOrdersData(SessionFactory sf)
 	{
 		return new OrdersDaoImpl(sf);

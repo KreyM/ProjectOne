@@ -34,14 +34,15 @@ public class CartDaoImpl implements CartDao
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Cart> findByCartPID(String userId)
+	public List<Cart> findByCartID(String userId)
 	{
 		Session session=sessionFactory.openSession();
 		List<Cart> cr=null;
 		try
 		{
 			session.beginTransaction();
-			cr= (List<Cart>)session.createQuery("from Cart where userMailId=: email").setString("email", userId);
+			cr=(List<Cart>)session.createQuery("from Cart where userMailId=:email").setString("email", userId).list();
+			session.getTransaction().commit();
 		}
 		
 		catch(HibernateException e)
@@ -52,13 +53,13 @@ public class CartDaoImpl implements CartDao
 		return cr;
 		
 	}
-	@SuppressWarnings("unchecked")
-	public Cart getCartById (int cartId, String userEmail)
+	
+	public Cart getCartById (int cartProductId, String userEmail)
 	{
 		Session session =sessionFactory.openSession();
 		Cart cr=null;
 		session.beginTransaction();
-		cr= (Cart)session.createQuery("from Cart where userMailId=: email and cartProductId=: pid").setString("email", userEmail).setInteger("pid", cartId).uniqueResult();
+		cr= (Cart)session.createQuery("from Cart where userMailId=:email and cartProductId=:id").setString("email", userEmail).setInteger("pid", cartProductId).uniqueResult();
 		session.getTransaction().commit();
 		return cr;
 	}
@@ -73,7 +74,7 @@ public class CartDaoImpl implements CartDao
 		
 	}
 	
-	public void updatecart(Cart cr)
+	public void updateCart(Cart cr)
 	{
 		Session session= sessionFactory.openSession();
 		session.beginTransaction();

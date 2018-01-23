@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.springframework.stereotype.Component;
 
@@ -18,11 +22,16 @@ public class User implements Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
+	@Email
 	private String email;
-	private String name;
+	@NotNull
+	private String name;	
+	@NotNull
 	private String password;
 	private String role;
 	private String address;
+	@Pattern(regexp="[\\\\d]{10)")
+	@Size(min=8, max=10, message="enter a velid number")
 	private String phone;
 	private boolean enables;
 	
