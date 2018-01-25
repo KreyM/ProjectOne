@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
   <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %> 
 <html>
 <head>
@@ -16,21 +16,12 @@
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
-<body bgcolor="acqua"> 
+<body> 
 <jsp:include page="/WEB-INF/views/header.jsp"></jsp:include>
-<div class="container">
-	<h2>LOGIN TO EXPLORE</h2>
-	<form action="${pageContext.request.contextPath }/login" class="form-signin" method="post">
-		<h3><label> Email : </label></h3>
-		<input type="text" name="username" class="login-box" required>
-		<h3><label> Password : </label></h3>
-		<input type="password" name="password" class="login-box" required>
-	<hr>
-		<button class="btn btn-lg btn-primary" type="submit">LOGIN</button>
-		<button class="btn btn-lg btn-warning" type="reset">Cancel</button>
-	</form>
 
-</div>
+hello
+This is us
+
 <jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>
 
 </body>

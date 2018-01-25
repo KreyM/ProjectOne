@@ -51,7 +51,7 @@
   </a>
 	</div>
 </div> 
-<h2>WELCOME</h2>
+
 <jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>
 </body>
 </html>

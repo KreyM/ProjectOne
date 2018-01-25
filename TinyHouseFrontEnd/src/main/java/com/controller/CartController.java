@@ -1,20 +1,16 @@
 package com.controller;
 
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+
 import java.security.Principal;
 import java.util.List;
 
-import javax.jws.WebParam.Mode;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.DaoImpl.*;
@@ -60,17 +56,28 @@ public class CartController
 		 ModelAndView mv=new ModelAndView();
 		 Principal principal =request.getUserPrincipal();
 		 String userEmail=principal.getName();
-		 
+		 //
 		 try
 		 {
+			/* User user=(User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			 
+			 String email=user.getEmail();*/
+			 
+			 System.out.println("hello");
 			 int pid =Integer.parseInt(request.getParameter("pid"));
+					 //Integer.parseInt(request.getParameter("pid"));
+			 System.out.println(pid);
 			 Double price=Double.parseDouble(request.getParameter("price"));
 			 int qty=Integer.parseInt(request.getParameter("pQty"));
+			 System.out.println("cart entery 2");
 			 String pname=request.getParameter("pname");
 			 String imgName=request.getParameter("imgName");
-			 Cart cartExist= cartDaoImpl.getCartById(pid,userEmail);
+			 System.out.println(imgName);
+			 Cart cartExist= cartDaoImpl.getCartById(pid, userEmail);//(pid,userEmail);
+			 System.out.println("cart entery 21");
 			 if(cartExist==null)
 			 {
+				 System.out.println("cart entery 3");
 				 Cart cm=new Cart();
 				 cm.setCartPrice(price);
 				 cm.setCartProductId(pid);
@@ -186,6 +193,8 @@ public class CartController
 			return mv;
 			
 	 }
+	 
+	 
 
 
 }

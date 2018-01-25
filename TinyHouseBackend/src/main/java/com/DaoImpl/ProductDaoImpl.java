@@ -83,7 +83,7 @@ public class ProductDaoImpl implements ProductDao
 		Session session= sessionFactory.openSession();
 		session.beginTransaction();
 	
-		session.update(prod);
+		session.saveOrUpdate(prod);//update(prod);
 		System.out.println("update entry 2");System.out.println("somewhat");
 		session.getTransaction().commit();
 		/*catch (Exception e) {
@@ -102,7 +102,19 @@ public class ProductDaoImpl implements ProductDao
 		session.delete(p);
 		session.getTransaction().commit();
 	}
-	
+	//@Override
+	public boolean updateProduct(Product product) {
+		try
+		{
+		sessionFactory.getCurrentSession().update(product);
+		return true;
+		}
+		catch(Exception e)
+		{
+		System.out.println("Exception Arised:"+e);
+		return false;
+		}
+	}
 }
 
 

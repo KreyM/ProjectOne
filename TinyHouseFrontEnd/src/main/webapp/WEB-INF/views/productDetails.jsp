@@ -37,6 +37,7 @@
    		  <tr><td><img src="D:/frontend/TinyHouseFrontEnd/src/main/resources/${p.imgName}" height="50px" width="50px"></td></tr></c:forEach></table>
 			 --%></div>
 			<div class="col-md-5" >
+			
 				<h3><b> <font color="grey">Product</font> :  ${prod.pname }</b></h3>
 				<h3><b> <font color="grey">Description</font> : ${prod.description }</b></h3>
 				<h3><b> <font color="grey">Price </font> : ${prod.price }</b></h3>
@@ -45,7 +46,14 @@
 				<h3><b> <font color="grey">Category</font> :${prod.category.cname }</b></h3> <br>	<br>
 				<hr width="10%">
 				<form action="${pageContext.request.contextPath }/addToCart" method="post">
-				
+				<input type="hidden" name="pid" value="${prod.pid}"> 
+				<input type="hidden" name="pname" value="${prod.pname}"> 
+				<input type="hidden" name="description" value="${prod.description}"> 
+				<input type="hidden" name="price" value="${prod.price}"> 
+				<input type="hidden" name="stock" value="${prod.stock}"> 
+				<input type="hidden" name="supplierName" value="${prod.supplier.supplierName}"> 
+				<input type="hidden" name="cname" value="${prod.category.cname}"> 
+				<input type="hidden" name="imgName" value="${prod.imgName}"> 
 				   <label><h3>Quantity </h3></label> <input type="number" width="20%" class="form-control" name="pQty" required=/> 
 				     <input type="submit" value="Add To Cart" class="btn btn-primary btn-lg"/> 
 				</form>

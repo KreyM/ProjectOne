@@ -1,5 +1,7 @@
 package com.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +35,11 @@ public class indexController
 	{
 		return "index";
 	}
-	
+	@RequestMapping("/aboutUs")
+	public String companyInfo()
+	{
+		return "aboutUs";
+	}
 
 	@RequestMapping(value="/goToRegister" , method=RequestMethod.GET)
 	 public ModelAndView goToRegister()
@@ -45,13 +51,13 @@ public class indexController
 	}
 	
 	@RequestMapping(value="/saveRegister" , method=RequestMethod.POST)
-	 public ModelAndView saveRegister(@ModelAttribute("user")User user, BindingResult result)
+	 public ModelAndView saveRegister(@Valid @ModelAttribute("user")User user, BindingResult result)
 	{
 		ModelAndView mav= new ModelAndView();
 		if(result.hasErrors())
 		{	
 			mav.setViewName("register");
-		
+			return mav;
 		}
 		else
 		{

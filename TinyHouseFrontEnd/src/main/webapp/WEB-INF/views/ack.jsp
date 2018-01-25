@@ -7,8 +7,10 @@
 <title>Acknowlegment page</title>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/header.jsp"></jsp:include>
 <h1  align="center" font-style: italic ; font-family: cursive;">Thank You</h1>
 <h2 align="center">Payment Made</h2>
-
+<h2 align="center">Go to  <a href="/TinyHouseFrontEnd">HOME</a> or <a href="${pageContext.request.contextPath }/logout">LOGOUT</a></h2>
+<jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>
 </body>
 </html>

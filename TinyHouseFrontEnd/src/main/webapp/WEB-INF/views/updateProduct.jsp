@@ -17,7 +17,7 @@
 <jsp:include page="header.jsp"></jsp:include>
 <div class="container"><br>
  <c:url value="/productUpdate" var="pru"></c:url>
-	<form method="post" action="updateProd" enctype="multipart/form-data">
+	<form method="post"   action="${pageContext.request.contextPath}/productUpdate" enctype="multipart/form-data">
 		<span id="reauth-email" class="reauth-email"></span>
 		<input type="hidden" name="pid" value="${prod.pid }">
 		

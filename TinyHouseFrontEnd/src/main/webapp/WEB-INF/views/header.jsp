@@ -25,7 +25,7 @@
 <nav class="navbar navbar-inverse" >
 <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">TINY HOUSE </a>
+      <a class="navbar-brand" href="${pageContext.request.contextPath}/aboutUs">TINY HOUSE </a>
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="/TinyHouseFrontEnd">Home</a></li>
@@ -71,10 +71,17 @@
      </c:if>
      
      <c:if test="${pageContext.request.userPrincipal.name!=null }">
+     <li><a href="${pageContext.request.contextPath }/goToCart"> My Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a> </li>
     	 <li><a>Let's Go Tiny,${pageContext.request.userPrincipal.name} </a></li>
      		<li><a href="${pageContext.request.contextPath }/logout"> Logout, Bye</a></li>
+     		
      </c:if>
     </ul>
+    
+    <br>
+    <br>
+    
+    
   </div>
   
 </nav>

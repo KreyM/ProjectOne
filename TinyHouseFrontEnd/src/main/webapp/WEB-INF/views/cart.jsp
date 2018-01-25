@@ -18,7 +18,8 @@
 
 <body> 
 <jsp:include page="/WEB-INF/views/header.jsp"></jsp:include>
- <table class="table table-hover" id="ap1" class="display" border="2" width="80" align="center">
+<div class="container">
+ <table class="table table-hover table-condensed" id="cart" class="display" border="2" width="80" align="center">
    		<tr>
 	   		<th>Serial No.</th>
 	  <!--  		<th>Product ID</th> -->
@@ -30,12 +31,8 @@
 	   		<th>Subtotal</th>
 	   		<th>Action</th>
    		</tr>
-   		<c:if test="${empty prodList }">
-   		  <tr> 
-   		    <td colspan="9" align="center"> No record found :( </td>
-   		  </tr>  
-   		</c:if>
    		
+   		<c:set var="ptot" value="0"></c:set>
    		<c:forEach var="p" varStatus="st" items="${cartInfo}">
    		  <tr>
    		 	<td> <c:out value="${p.pname }"></c:out></td>
@@ -52,7 +49,11 @@
 				
    		   </tr>	
    		</c:forEach>
-   		
+   		<c:if test="${empty cartInfo }">
+   		  <tr> 
+   		    <td colspan="9" align="center"> No record found :( </td>
+   		  </tr>  
+   		</c:if>
    		<td>
    		<span class="col-md-8" align="center"><label>Total : </label> <c:out value="${ptot }"></c:out> </span>
    		</td>
@@ -68,5 +69,8 @@
    		</td></tfoot>
    		
    </table>
-</body>
-</html>
+   </div>
+   <jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>
+   </body>
+   </html>
+  

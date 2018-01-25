@@ -78,6 +78,7 @@ private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/tested2";
 	{
 		LocalSessionFactoryBuilder lsfb= new LocalSessionFactoryBuilder(datasource);
 		lsfb.addProperties(getHibernateProperties());
+		lsfb.scanPackages("com.*");
 		lsfb.addAnnotatedClass(User.class);
 		lsfb.addAnnotatedClass(Supplier.class);
 		lsfb.addAnnotatedClass(Category.class);

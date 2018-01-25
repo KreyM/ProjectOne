@@ -1,6 +1,8 @@
 package com.controller;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.Dao.ProductDao;
 import com.DaoImpl.CategoryDaoImpl;
 import com.DaoImpl.ProductDaoImpl;
 import com.DaoImpl.SupplierDaoImpl;
@@ -36,6 +39,8 @@ public class adminController
 	{
 		return "adding";
 	}
+	
+	
 	
 	@RequestMapping(value="/saveSupplier", method=RequestMethod.POST)
 	@Transactional
@@ -156,12 +161,67 @@ public class adminController
 	}
 		
 	@RequestMapping(value="/productUpdate", method=RequestMethod.POST)
-	@Transactional
-/*172*/public String updateProd(HttpServletRequest request, @RequestParam("file")MultipartFile file)
+	/*@Transactional*/
+	/*public String updateMyProduct(@ModelAttribute("product")Product product,@RequestParam("imgName")MultipartFile fileDetail,Model m)
+	{
+			
+			 System.out.println("Before update");
+			 
+			productDaoImpl.updateProduct(product);
+			 System.out.println("product added");
+			//String path=" E:\\FashionFrontEnd\\ECommFrontEnd\\ECommFrontEnd\\src\\main\\webapp\\resources\\images\\";
+			String path = "E:/FashionFrontEnd/ECommFrontEnd/ECommFrontEnd/src/main/webapp/resources/images/";
+			 String totalFileWithPath=path+String.valueOf(product.getPid())+".jpg";
+			File productImage=new File(totalFileWithPath);
+			System.out.println("total file path" + totalFileWithPath);
+			if(!fileDetail.isEmpty())
+			{
+			 try
+			 {
+				 System.out.println("In try block");
+				byte fileBuffer[]=fileDetail.getBytes();
+				System.out.println("Get Bytes" + fileDetail.getBytes()+ fileBuffer);
+				FileOutputStream fos=new FileOutputStream(productImage);
+				System.out.println("output stream object");
+				BufferedOutputStream bs=new BufferedOutputStream(fos);
+				System.out.println("output stream object created");
+				bs.write(fileBuffer);
+				System.out.println("write buffer");
+				bs.close();
+				System.out.println("image uploaded");
+			 }
+			 catch(FileNotFoundException ex)
+			 {
+				 System.out.println("exception arised " + ex);
+				 ex.printStackTrace();
+			 }
+			 
+			 catch(Exception e)
+			 {
+				 System.out.println("In catch block");
+				 m.addAttribute("error",e.getMessage());
+			  }
+			}
+			else
+			{
+				 System.out.println("In else block");
+				m.addAttribute("error","Problem in File Uploading");
+			}
+			 System.out.println("Out of try block");
+			Product product1=new Product();
+			System.out.println("Product object created");
+			m.addAttribute(product1);		
+		
+		return "redirect:/Product";
+		
+	}*/
+/*172*//*
+ * ACCORDING TO MAAM . ABOVE BHAVANA
+ */ public String updateProd(HttpServletRequest request, @RequestParam("file")MultipartFile file)
 	{
 		System.out.println("somewhat");
 		int pid= request.getIntHeader("pid");
-				/*getParameter("pid"); */
+			//	getParameter("pid"); 
 		Product prod = new Product();
 		prod.setPname(request.getParameter("pname"));
 		System.out.println("somewhat");
