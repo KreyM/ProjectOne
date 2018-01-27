@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.Dao.*;
@@ -57,7 +58,12 @@ public class ProductDaoImpl implements ProductDao
 		return p;
 		
 	}
-	
+	public Category getCategory(int catId) {
+		Session session=sessionFactory.openSession();
+		Category category=(Category)session.get(Category.class,catId);
+		session.close();
+		return category;
+	}
 	public List<Product> getProdBycatId(int cid)
 	{
 		Session session=sessionFactory.openSession();
@@ -83,14 +89,10 @@ public class ProductDaoImpl implements ProductDao
 		Session session= sessionFactory.openSession();
 		session.beginTransaction();
 	
-		session.saveOrUpdate(prod);//update(prod);
-		System.out.println("update entry 2");System.out.println("somewhat");
+		//session.update(prod);//saveOrUpdate(prod);//update(prod);
+		session.update("pid", prod);
 		session.getTransaction().commit();
-		/*catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			session.getTransaction().rollback();
-		}*/
+		
 		System.out.println("somewhat");
 	}
 	
@@ -103,17 +105,11 @@ public class ProductDaoImpl implements ProductDao
 		session.getTransaction().commit();
 	}
 	//@Override
-	public boolean updateProduct(Product product) {
-		try
-		{
-		sessionFactory.getCurrentSession().update(product);
-		return true;
-		}
-		catch(Exception e)
-		{
-		System.out.println("Exception Arised:"+e);
-		return false;
-		}
+	public void updateProduct(Product product) {
+		Session session=sessionFactory.openSession();
+		Transaction tran=session.beginTransaction(); 
+		session.update(product);
+		tran.commit();
 	}
 }
 

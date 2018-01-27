@@ -40,6 +40,8 @@
 			</div>
 		</div>
 		
+		 
+		
 		<!-- Left and right controls -->
   <a class="left carousel-control" href="#myCarousel" data-slide="prev">
     <span class="glyphicon glyphicon-chevron-left"></span>
@@ -50,6 +52,21 @@
     <span class="sr-only">Next</span>
   </a>
 	</div>
+	<h1>Favourite Buys in Kitchen</h1>
+	<ul>
+	<li><a href="${pageContext.request.contextPath }/productCustList?cid=2"><img src="D:/frontend/TinyHouseFrontEnd/src/main/resources/${p.imgName}">
+	
+	</a>
+	</li>
+	<ins> </ins>
+	<%-- <li> <a class="btn btn-info" role="button" href="<c:url value="/prodDetails/${p.pid}"/>" >  Details </a></li>
+	<c:if test="true">
+<%@include file="productCustList.jsp"%>	
+	</c:if> --%>
+	
+	</ul>
+		 <a href="http://localhost:8080/TinyHouseFrontEnd/prodDetails/70"><img src="D:/frontend/TinyHouseFrontEnd/src/main/resources/3.jpg" height="100px" width="100px"> </a>
+		 <br><br><br><br><br>
 </div> 
 
 <jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>

@@ -18,7 +18,9 @@
 
 <body> 
 <jsp:include page="/WEB-INF/views/header.jsp"></jsp:include>
+<br><br>
 <div class="container">
+<br><br><br><br>
  <table class="table table-hover table-condensed" id="cart" class="display" border="2" width="80" align="center">
    		<tr>
 	   		<th>Serial No.</th>

@@ -15,15 +15,34 @@
 <jsp:include page="header.jsp"></jsp:include>
 <div class="container"><br>
 
-	<br><br>
+ <c:url value="/supplierUpdate" var="pru"></c:url>
+	<form method="post"   action="${pageContext.request.contextPath}/admin/supplierUpdate" >
+		<span id="reauth-sid" class="reauth-sid"></span>
+		<input type="hidden" name="sid" value="${supplier.sid }">
+		
+		<h3 class="input-title"> Supplier Name</h3> <br>
+		<input value="${supplier.supplierName}" type="text" name="supplierName" required/>
+		
+		<h3 class="input-title"> Supplier Address</h3> <br>
+		<input value="${supplier.saddress }" type="text" name="saddress" required/>
+		
+		<h3 class="input-title"> Supplier Phone</h3> <br>
+		<input value="${supplier.sphone }" type="number" name="sphone" required/>
+					
+					
+				
+					<br><br>
 					<button class="btn btn-md btn-primary" type="submit">
 					Update
 					</button>
 					<button class="btn btn-md btn-warning" type="reset">
-					Cancel
+					Reset
 					</button>
+				</form>
+				</div>
+			
+	<br><br>
 </div>
-/
 
 </body>
 </html>

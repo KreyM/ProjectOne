@@ -68,6 +68,14 @@ public class indexController
 		}
 		return mav;
 	}
+	@RequestMapping("/productList")
+	public ModelAndView prodlist() 
+	{
+		ModelAndView mav =new ModelAndView();
+		mav.addObject("prodList",productDaoImpl.retrieve());
+		mav.setViewName("productAdmin");
+		return mav;
+	}
 	
 	@RequestMapping(value="/productCustList")
 	public ModelAndView getCustTable(@RequestParam("cid") int cid)

@@ -23,33 +23,17 @@
 </head>
 <body >
 
-<nav class="navbar navbar-inverse"  >
+<br>
+<br><br>
+<nav class="navbar navbar-inverse navbar-fixed-bottom">
+
 <div class="container-fluid">
 <div class="navbar fixed-bottom" >
  <a class="navbar-brand" href="${pageContext.request.contextPath}/aboutUs">TINY HOUSE </a>
   
-  <ul class="nav navbar-nav">
-      <li class="active"><a href="/TinyHouseFrontEnd">Home</a></li>
-    <security:authorize access="hasRole('ROLE_ADMIN')">
-     <li><a href="admin/adding">Admin</a></li>
-       <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin List
-        <span class="caret"></span> </a>
-        <ul  class="dropdown-menu">
-        <li><a href="${pageContext.request.contextPath }/admin/productList">Product</a></li>
-         <li><a href="${pageContext.request.contextPath }/admin/supplierList">Supplier</a></li>
-         <li><a href="${pageContext.request.contextPath }/admin/categoryList">Category</a></li>
-		</ul>
-		</li>
-</security:authorize>
-   
-  </ul>  
+    
   <ul class="nav navbar-nav navbar-right">
-	  <c:if test="${pageContext.request.userPrincipal.name==null }"> 
-     <li><a href="goToLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      <li><a href="goToRegister"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-     
-     </c:if>
+	
    
 	 <li><a href="https://www.facebook.com/"> <span class="fa fa-facebook"> </span> Facebook </a> </li>
 	 <li><a href="https://twitter.com/"> <span class="fa fa-twitter"> </span> Twitter </a> </li>

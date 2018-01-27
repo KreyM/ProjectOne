@@ -43,6 +43,14 @@
 					
 					<h3 class="input-title"> Supplier Name</h3> <br>
 					<input class="form-control" type="text" name="supplierName" required/>
+					
+					
+					<h3 class="input-title"> Supplier Address</h3> <br>
+					<input class="form-control" type="text" name="saddress" required/>
+					
+					
+					<h3 class="input-title"> Supplier Phone No.</h3> <br>
+					<input class="form-control" type="number" name="sphone" required/>
 					<br>
 					<br>
 					<button class="btn btn-md btn-primary" type="submit">

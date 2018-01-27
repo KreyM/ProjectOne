@@ -7,6 +7,8 @@ import java.util.Set;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.springframework.stereotype.Component;
 
@@ -22,6 +24,24 @@ public class Supplier implements Serializable
 	@Id
 	private int sid;
 	private String supplierName;
+	@Pattern(regexp="[\\d]{10}", message="Enter only 10 digits" )
+	@Size( min=8, max=10, message="Enter valid number")
+	private String sphone;
+	
+	public String getSphone() {
+		return sphone;
+	}
+	public void setSphone(String sphone) {
+		this.sphone = sphone;
+	}
+	public String getSaddress() {
+		return saddress;
+	}
+	public void setSaddress(String saddress) {
+		this.saddress = saddress;
+	}
+	private String saddress;
+	
 	public String getSupplierName() {
 		return supplierName;
 	}

@@ -8,5 +8,6 @@ public interface ProductDao {
 	public List<Product> retrieve();
 	public Product findByPID(int pid);
 	public  void update(Product prod) ;
-	public boolean updateProduct(Product product);
+	public Category getCategory(int catId);
+	public void updateProduct(Product product);
 }

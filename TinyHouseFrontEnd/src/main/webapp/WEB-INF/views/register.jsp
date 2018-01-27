@@ -15,6 +15,21 @@
 	<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<style type="err">
+	.has-error .control-label,
+.has-error .help-block,
+.has-error .form-control-feedback {
+    color: #a94442;
+}
+
+/* Color of valid field */
+.has-success .control-label,
+.has-success .help-block,
+.has-success .form-control-feedback {
+    color: #3c763d;
+}
+</style>
+
 </head>
 
 <body> 
@@ -25,28 +40,28 @@
 		<div class="row">
 		<form:form action="saveRegister" method="post" modelAttribute="user">
 <!-- <form > -->
-<form:errors path="name" cssClass="err"/>
+<form:errors path="name" cssStyle="err.css" cssClass="err"/>
 		<div class="form-group">
 		<label> Name :  </label>
-		<input name="name" class="form-control" placeholder= "Enter name"/>
+		<input name="name" class="form-control" placeholder= "Enter name" required/>
 		</div>
 		<div class="form-group">
-		<form:errors path="email" cssClass="err"/>
+		<form:errors  path="email" cssStyle="err.css" cssClass="err"/>
 		<label> Email :  </label>
-		<input name="email" class="form-control" placeholder= "Enter Email"/>
+		<input name="email" class="form-control" placeholder= "Enter Email"  required/>
 		</div>
 		<div class="form-group">
 		<label> Password :  </label>
-		<input name="password" class="form-control" placeholder= "Enter Password"/>
+		<input name="password" class="form-control" placeholder= "Enter Password" required/>
 		</div>
 		<div class="form-group">
 		<label> Address :  </label>
-		<input name="address" class="form-control" placeholder= "Enter Address"/>
+		<input name="address" class="form-control" placeholder= "Enter Address" required/>
 		</div>
 		<div class="form-group">
 		<form:errors path="phone" cssClass="err"/>
 		<label> Phone Number :  </label>
-		<input name="phone" class="form-control" placeholder= "Enter Phone Number">
+		<input name="phone" class="form-control" placeholder= "Enter Phone Number" required/>
 		</div>
 		<br>
 		<br>

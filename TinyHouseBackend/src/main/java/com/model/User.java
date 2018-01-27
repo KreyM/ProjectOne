@@ -22,7 +22,7 @@ public class User implements Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Email(message="Enter valid Email")
+	@Email(message="Enter valid Email" )
 	private String email;
 	@NotNull
 	private String name;	
@@ -30,8 +30,8 @@ public class User implements Serializable
 	private String password;
 	private String role;
 	private String address;
-	@Pattern(regexp="[\\\\d]{10)" )
-	@Size(min=8, max=10, message="Enter valid number")
+	@Pattern(regexp="[\\d]{10}", message="Enter only 10 digits" )
+	@Size( min=8, max=10, message="Enter valid number")
 	private String phone;
 	private boolean enables;
 	

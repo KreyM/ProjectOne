@@ -30,7 +30,7 @@
 		  <div class="modal-body"> <span>Adding Successful</span>  </div>
 		  
 		  <div class="modal-footer">
-		  <a href="${pageContext.request.contextPath }/admin/adding" class="btn btn-warning" role="button">
+		<a href="javascript:history.back()" class="btn btn-warning" role="button">
 		  Back		  </a></div>
 		
 		</div>

@@ -1,0 +1,11 @@
+@charset "ISO-8859-1";
+body {
+    color: blue;
+}
+form {
+	 color: blue;
+	 font-family: cursive;
+}
+h1 {
+    color: green;
+}

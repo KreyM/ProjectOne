@@ -26,6 +26,8 @@
 	   		<th>Serial No.</th>
 	   		<th>Supplier ID</th>
 	   		<th> Supplier Name</th>
+	   		<th>Address</th>
+	   		<th>Phone</th>
 	   		<th class="span2">Action</th>
    		</tr>
    		
@@ -35,14 +37,16 @@
    		  </tr>  
    		</c:if>
    		
-   		<c:forEach var="p" varStatus="st" items="${satList }">
+   		<c:forEach var="ss" varStatus="st" items="${satList }">
    		  <tr>
    		 	<td> <c:out value="${st.count }"></c:out></td>
-   		 	<td> <c:out value="${p.sid }"></c:out></td>
-   		 	<td> <c:out value="${p.supplierName}"></c:out></td>
+   		 	<td> <c:out value="${ss.sid }"></c:out></td>
+   		 	<td> <c:out value="${ss.supplierName}"></c:out></td>
+   		 	<td> <c:out value="${ss.saddress}"></c:out></td>
+   		 	<td> <c:out value="${ss.sphone}"></c:out></td>
    		 	<td class="span4"> 
    		   <c:set var="contextRoot" value="${pageContext.request.contextPath}"/>
-				<a class="btn btn-info" role="button" href="${contextRoot }/admin/Edit">EDIT</a>
+				<a class="btn btn-info" role="button" href="${contextRoot }/admin/updateSupp?sid= <c:out value="${ss.sid }" ></c:out>">EDIT</a>
 				<a class="btn btn-danger" role="button" href="${contextRoot }/admin/Delete">DELETE</a>
 				
 				</td>

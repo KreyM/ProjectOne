@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.Dao.ProductDao;
+import com.Dao.*;
 import com.DaoImpl.CategoryDaoImpl;
 import com.DaoImpl.ProductDaoImpl;
 import com.DaoImpl.SupplierDaoImpl;
@@ -44,12 +44,14 @@ public class adminController
 	
 	@RequestMapping(value="/saveSupplier", method=RequestMethod.POST)
 	@Transactional
-	public ModelAndView saveSupplierData(@RequestParam("sid")int sid, @RequestParam("supplierName")String supplierName )
+	public ModelAndView saveSupplierData(@RequestParam("sid")int sid, @RequestParam("supplierName")String supplierName, @RequestParam("saddress")String saddress, @RequestParam("sphone")String sphone )
 	{
 		ModelAndView mv= new ModelAndView();
 		Supplier ss = new Supplier();
 		ss.setSid(sid);
 		ss.setSupplierName(supplierName);
+		ss.setSaddress(saddress);
+		ss.setSphone(sphone);
 		supplierDaoImpl.insertSupplier(ss);
 		mv.setViewName("modal");
 		return mv;
@@ -78,8 +80,8 @@ public class adminController
 		prod.setPrice(Double.parseDouble(request.getParameter("price")));
 		prod.setDescription(request.getParameter("description"));
 		prod.setStock(Integer.parseInt(request.getParameter("stock")));
-		prod.setCategory(categoryDaoImpl.findByCategoryId(Integer.parseInt(request.getParameter("pCategory"))));
-		prod.setSupplier(supplierDaoImpl.findBySupplierId(Integer.parseInt(request.getParameter("pSupplier"))));
+		prod.setCategory(categoryDaoImpl.findByCID(Integer.parseInt(request.getParameter("pCategory"))));
+		prod.setSupplier(supplierDaoImpl.findBySID(Integer.parseInt(request.getParameter("pSupplier"))));
 		String filepath= request.getSession().getServletContext().getRealPath("/");
 		String filename=file.getOriginalFilename();
 		prod.setImgName(filename);
@@ -145,80 +147,40 @@ public class adminController
 		return "deleteModal";
 	
 	}
+	
+	@RequestMapping("/deleteCategory/{cid}")
+	public String deleteCategory(@PathVariable("cid")int cid) 
+	{
+		try {
+		categoryDaoImpl.deleteCategory(cid);
+		}
+		catch(Exception e)
+		{
+			return "deletionError";
+		}
+		return "deleteModal";
+	
+	}
 	/*157*/
+	
 	@RequestMapping("/updateProd")
-	public ModelAndView updateProduct(@RequestParam("pid") int pid)
+	public String updateProduct(@RequestParam("pid") int pid, Model model)
 	{
 		ModelAndView mav =new ModelAndView();
 		Product p=productDaoImpl.findByPID(pid);
-		
-		mav.addObject("prod",p);
+		model.addAttribute("productdata", prodlist());
+		model.addAttribute("product1",new Product());
+		/*mav.addObject("prod",p);
 		mav.addObject("catList",categoryDaoImpl.retrieve());
 		mav.addObject("satList", supplierDaoImpl.retrieve());
-		mav.setViewName("updateProduct");
-		return mav;
+		mav.setViewName("updateProduct");*/
+		return "updateProduct";
 	/*	167*/
 	}
 		
 	@RequestMapping(value="/productUpdate", method=RequestMethod.POST)
-	/*@Transactional*/
-	/*public String updateMyProduct(@ModelAttribute("product")Product product,@RequestParam("imgName")MultipartFile fileDetail,Model m)
-	{
-			
-			 System.out.println("Before update");
-			 
-			productDaoImpl.updateProduct(product);
-			 System.out.println("product added");
-			//String path=" E:\\FashionFrontEnd\\ECommFrontEnd\\ECommFrontEnd\\src\\main\\webapp\\resources\\images\\";
-			String path = "E:/FashionFrontEnd/ECommFrontEnd/ECommFrontEnd/src/main/webapp/resources/images/";
-			 String totalFileWithPath=path+String.valueOf(product.getPid())+".jpg";
-			File productImage=new File(totalFileWithPath);
-			System.out.println("total file path" + totalFileWithPath);
-			if(!fileDetail.isEmpty())
-			{
-			 try
-			 {
-				 System.out.println("In try block");
-				byte fileBuffer[]=fileDetail.getBytes();
-				System.out.println("Get Bytes" + fileDetail.getBytes()+ fileBuffer);
-				FileOutputStream fos=new FileOutputStream(productImage);
-				System.out.println("output stream object");
-				BufferedOutputStream bs=new BufferedOutputStream(fos);
-				System.out.println("output stream object created");
-				bs.write(fileBuffer);
-				System.out.println("write buffer");
-				bs.close();
-				System.out.println("image uploaded");
-			 }
-			 catch(FileNotFoundException ex)
-			 {
-				 System.out.println("exception arised " + ex);
-				 ex.printStackTrace();
-			 }
-			 
-			 catch(Exception e)
-			 {
-				 System.out.println("In catch block");
-				 m.addAttribute("error",e.getMessage());
-			  }
-			}
-			else
-			{
-				 System.out.println("In else block");
-				m.addAttribute("error","Problem in File Uploading");
-			}
-			 System.out.println("Out of try block");
-			Product product1=new Product();
-			System.out.println("Product object created");
-			m.addAttribute(product1);		
-		
-		return "redirect:/Product";
-		
-	}*/
-/*172*//*
- * ACCORDING TO MAAM . ABOVE BHAVANA
- */ public String updateProd(HttpServletRequest request, @RequestParam("file")MultipartFile file)
-	{
+	 public String updateProd(Product product, Model model)
+	{/*
 		System.out.println("somewhat");
 		int pid= request.getIntHeader("pid");
 			//	getParameter("pid"); 
@@ -231,8 +193,8 @@ public class adminController
 		String cat=request.getParameter("pCategory");
 		String sat=request.getParameter("pSupplier");
 		System.out.println("somewhat");
-		prod.setCategory(categoryDaoImpl.findByCategoryId(Integer.parseInt(cat)));
-		prod.setSupplier(supplierDaoImpl.findBySupplierId(Integer.parseInt(sat)));
+		prod.setCategory(categoryDaoImpl.findByCID(Integer.parseInt(cat)));
+		prod.setSupplier(supplierDaoImpl.findBySID(Integer.parseInt(sat)));
 		String filepath= request.getSession().getServletContext().getRealPath("/");
 		String filename=file.getOriginalFilename();
 		prod.setImgName(filename);System.out.println("b4 b4 somewhat after update");
@@ -252,9 +214,71 @@ public class adminController
 		{
 			e.printStackTrace();
 			System.out.println("not working");
-		}
+		}*/
+		productDaoImpl.updateProduct(product);//editProduct(product);
+		model.addAttribute("prolist",this.productDaoImpl.retrieve());//getProductList());
+		//return "ProductPage";
+		return "modal";
+	}
+	
+	
+	@RequestMapping("/updateSupp")
+	public ModelAndView updateSupplier(@RequestParam("sid") int sid)
+	{
+		ModelAndView mav =new ModelAndView();
+		Supplier supp= supplierDaoImpl.findBySID(sid);
+		
+		mav.addObject("supplier",supp);
+		
+		mav.setViewName("updateSupplier");
+		return mav;
+	
+	}
+	@RequestMapping(value="/supplierUpdate",method=RequestMethod.POST)
+	public String updatesupplier(Supplier supplier,Model model)
+	{
+	
+		//supplierdao.editSupplier(supplier);
+		model.addAttribute("satlist",this.supplierDaoImpl.retrieve());
+		
+		supplierDaoImpl.updateSupplier(supplier);
+		return "modal";
+	}
+	
+	@RequestMapping("/updateCat")
+	public ModelAndView updateCategory(@RequestParam("cid") int cid)
+	{
+		ModelAndView mav =new ModelAndView();
+	Category cat=categoryDaoImpl.findByCID(cid);
+	
+		mav.addObject("category",cat);
+		
+		mav.setViewName("updateCategory");
+		return mav;
+	
+	}
+	
+	@RequestMapping(value="/categoryUpdate", method=RequestMethod.POST)
+	 public String updateCat(HttpServletRequest request)
+	{
+		
+		int cid=request.getIntHeader("cid");
+				//getIntHeader(Integer.parseInt(request.getParameter("cid")));// (Integer.parseInt(request.getParameter("cid")));
+				/*
+*/			//	getParameter("pid"); 
+		Category cat= new Category();
+		cat.setCname(request.getParameter("cname"));
+		cat.setCid(Integer.parseInt(request.getParameter("cid")));
+		//prod.setStock(Integer.parseInt(request.getParameter("stock")));
+		
+		categoryDaoImpl.updateCategory(cat);
+		System.out.println(" b4 somewhat after update");
+
+		System.out.println("somewhat after update");
+		
 		
 		return "modal";
 	}
 	
+		
 }

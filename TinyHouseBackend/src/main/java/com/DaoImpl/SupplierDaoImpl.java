@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,7 @@ public class SupplierDaoImpl implements SupplierDao
 		return li;
 	}
 	
-	public Supplier findBySupplierId(int sid)
+	public Supplier findBySID(int sid)
 	{
 		Session session= sessionFactory.openSession();
 		Supplier s=null;
@@ -61,6 +62,26 @@ public class SupplierDaoImpl implements SupplierDao
 		}
 		return s;
 	}
+
 	
+
+	public void update(Supplier supp) {
+		Session session= sessionFactory.openSession();
+		session.beginTransaction();
+	
+		session.saveOrUpdate(supp);
+		session.getTransaction().commit();
+		
+	}
+
+	public void updateSupplier(Supplier supplier) {
+		Session session=sessionFactory.openSession();
+		Transaction tran=session.beginTransaction(); 
+		session.update(supplier);
+		tran.commit();
+		/*session.flush();
+		session.close();*/
+	
+	}
 
 }

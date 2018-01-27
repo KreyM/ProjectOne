@@ -16,11 +16,17 @@
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
-<body> 
+<body > 
 <jsp:include page="/WEB-INF/views/header.jsp"></jsp:include>
-<h1>Error</h1>
-<h2>Please try again</h2>
-<h1><a href="${pageContext.request.contextPath }/index">Home</a> or <a href="javascript:history.back()">Back </a> again</h1>
+<br><br>
+<br><br>
+<h1 align="center" style="color: red;">Error</h1>
+<br><br>
+<h4 align="center" >We cannot delete this item.</h4>
 
+<br><br>
+
+<h1 align="center" ><a href="${pageContext.request.contextPath }/index">Home</a> or <a href="javascript:history.back()">Go Back</a></h1>
+<jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>
 </body>
 </html>
