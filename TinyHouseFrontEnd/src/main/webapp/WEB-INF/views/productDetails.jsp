@@ -11,6 +11,54 @@
 		<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<script type="text/javascript">
+	$(function() {
+		$('#myProductTable')
+				.DataTable(
+						{
+							ajax : {
+								url : 'TinyHouseFrontEnd/prodDetails/111',
+								dataSrc : ''
+							},
+							columns : [
+									
+									{
+										data : 'name'
+									},{
+										data : 'brand'
+									},
+									{
+										data : 'description'
+									},
+									{
+										data : 'quantity'
+									},
+									{
+										data : 'price',
+										mRender : function(data, type, row) {
+											return "&#8377; &#160;" + data;
+										}
+									},
+
+									{
+										data : null,
+										mRender : function(data, type, row) {
+											return '<img src="D:/frontend/TinyHouseFrontEnd/src/main/resources/${prod.imgName}' 
+							+ row.imageUrl+ '" height="50" width="50">';
+										}
+									},
+									{
+										data : null,
+										mRender : function(data, type, row) {
+											return '<a class="btn btn-primary" href="${contextRoot}/productDetails/' 
+							+ row.id+ '">View Item</a> &nbsp;<a class="btn btn-primary" href="${contextRoot}/cart/addtocart/' 
+							+ row.id + '"><span class="glyphicon glyphicon-shopping-cart"></span>Add To Cart</a>';
+										}
+									} ]
+						});
+	});
+</script>
+
 </head>
 
 <body> 
@@ -45,7 +93,7 @@
 				<h3><b> <font color="grey">Supplier </font> : ${prod.supplier.supplierName }</b></h3>
 				<h3><b> <font color="grey">Category</font> :${prod.category.cname }</b></h3> <br>	<br>
 				<hr width="10%">
-				<form action="${pageContext.request.contextPath }/addToCart" method="post">
+				<%-- <form action="${pageContext.request.contextPath }/addToCart" method="post">
 				<input type="hidden" name="pid" value="${prod.pid}"> 
 				<input type="hidden" name="pname" value="${prod.pname}"> 
 				<input type="hidden" name="description" value="${prod.description}"> 
@@ -56,8 +104,29 @@
 				<input type="hidden" name="imgName" value="${prod.imgName}"> 
 				   <label><h3>Quantity </h3></label> <input type="number" width="20%" class="form-control" name="pQty" required=/> 
 				     <input type="submit" value="Add To Cart" class="btn btn-primary btn-lg"/> 
-				</form>
+				</form> --%>
+				 <form action="${pageContext.request.contextPath }/addToCart/${prod.pid }" method="post">
+				<input type="hidden" name="pid" value="${prod.pid}"> 
+				<input type="hidden" name="pname" value="${prod.pname}"> 
+				<input type="hidden" name="description" value="${prod.description}"> 
+				<input type="hidden" name="price" value="${prod.price}"> 
+				<input type="hidden" name="stock" value="${prod.stock}"> 
+				<input type="hidden" name="supplierName" value="${prod.supplier.supplierName}"> 
+				<input type="hidden" name="cname" value="${prod.category.cname}"> 
+				<input type="hidden" name="imgName" value="${prod.imgName}"> 
+				   <label>Quantity </label> <input type="number" width="20%" class="form-control" name="pQty" required/> 
+				     <input type="submit" value="Add To Cart" class="btn btn-primary btn-lg"/> <span class="glyphicon glyphicon-shopping-cart"></span>
+			
+		
+				</form>  
+		
+			
 				
+    		   <a class="btn btn-info" role="button" href="${pageContext.request.contextPath }/addToCart/${prod.pid }">  Details </a>
+   		  <a class="btn btn-primary" role="button" href="${pageContext.request.contextPath }/addToCart/${prod.pid }" ><span class="glyphicon glyphicon-shopping-cart"></span>Add To Cart</a>
+			<br>
+			<br>
+			  <a class="btn btn-primary" role="button" href="${pageContext.request.contextPath }/addingCartDemo/${prod.pid }" ><span class="glyphicon glyphicon-shopping-cart"></span>Add To Cart Demo</a>
 			</div>
 				
 			<%-- <div >

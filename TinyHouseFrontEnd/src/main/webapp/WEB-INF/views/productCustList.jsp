@@ -57,7 +57,7 @@
    		   <c:set var="contextRoot" value="${pageContext.request.contextPath }"></c:set>
    		      		   
    		   
-    		   <a class="btn btn-info" role="button" href="<c:url value="/prodDetails/${p.pid }"/>" >  Details </a>
+    		   <a class="btn btn-info" role="button" href="${pageContext.request.contextPath }/prodDetails/${p.pid }">  Details </a>
    		   </td>
 				
    		   </tr>	

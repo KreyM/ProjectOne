@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Entity
+@Table(name="UserDemo")
 public class User implements Serializable
 {
 	/**
@@ -23,8 +24,16 @@ public class User implements Serializable
 	@Id
 	@Email(message="Enter valid Email" )
 	private String email;
+/*	@Id
+
+	private int id;*/
+
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
+	@JoinColumn(name="id")
+	private Cart cart;
 	@NotNull
 	private String name;	
+	private String surname;
 	@NotNull
 	private String password;
 	private String role;
@@ -33,9 +42,17 @@ public class User implements Serializable
 	@Size( min=8, max=10, message="Enter valid number")
 	private String phone;
 	private boolean enables;
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
-	private Cart cart;
+//	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
+//	@JoinColumn(name="id")
+//	private Cart cart;
 
+
+	/*public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}*/
 	public Cart getCart() {
 		return cart;
 	}

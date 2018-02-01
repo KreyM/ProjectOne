@@ -104,8 +104,8 @@
     
      <ul class="nav navbar-nav navbar-right">
      <c:if test="${pageContext.request.userPrincipal.name==null }"> 
-     <li><a href="goToLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      <li><a href="goToRegister"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+     <li><a href="${pageContext.request.contextPath }/goToLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      <li><a href="${pageContext.request.contextPath }/goToRegister"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
      
      </c:if>
      

@@ -81,11 +81,11 @@ public class CartItemDaoImpl implements CartItemDao {
 		q.executeUpdate();
 	}
 
-	public CartItem getCartItemByCartIdAndProductId(int cartid, int productid) {
-	
+	public CartItem getCartItemByCartIdAndProductId(int cartId, int productid) {
+	System.out.println("entering getCartItemByCartIdAndProductId ");
 		try{
 		Query q=sessionFactory.getCurrentSession().createQuery("From CartItem where cart_id=:cartid and product_id=:proid");
-		q.setParameter("cartid", cartid);
+		q.setParameter("cartId", cartId);
 		q.setParameter("proid", productid);
 		
 		return (CartItem)q.getSingleResult();

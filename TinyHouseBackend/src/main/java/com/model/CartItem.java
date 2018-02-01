@@ -7,6 +7,7 @@ import javax.persistence.*;
 import org.springframework.stereotype.Component;
 @Component
 @Entity
+@Table
 public class CartItem implements Serializable {
 
 	/**
@@ -15,9 +16,14 @@ public class CartItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
 	private int id;
+	
 	private double totalPrice;
+	
 	private int quantity;
+	
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="cartId")
 	private Cart cart;

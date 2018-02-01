@@ -6,8 +6,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-import org.springframework.stereotype.Component;
-@Component
+//import org.springframework.stereotype.Component;
+//@Component
 @Entity
 public class Cart implements Serializable 
 {
@@ -16,30 +16,71 @@ public class Cart implements Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue
-	private int cartId;
-	private int cartProductId;
-	@OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinColumn(name="userMailId")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	private int totalItems;
+	private double grandTotal;
+	
+	//private int cartProductId;
+	@OneToOne (cascade=CascadeType.PERSIST)
+	private User user;
+
+	@OneToMany(fetch=FetchType.EAGER)
+	@JoinColumn(name="id")
+	private Set<CartItem> cartItem=new HashSet<CartItem>();
+
+	public Cart(int cartId, User cartUserDetails, double cartPrice, int cartStock )
+	{
+		this.id= cartId;
+		this.grandTotal=cartPrice;
+		this.totalItems=cartStock;
+		this.user=cartUserDetails;
+		
+		//this.cartProductId=cartProductId;
+		//this.cartUserDetails= cartUserDetails;
+		//this.cartPrice=cartPrice;
+		//this.cartStock=cartStock;
+		/*this.cartImage=cartImage;
+		*/
+		
+	}
+	/*@OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@JoinColumn(name="email")
 	private User cartUserDetails;
 	private double cartPrice;// grand total
 	private int cartStock;
 	private String cartImage;
-	private String cartProductName;
-	private int totalItems;
-	private double grandTotal;
-	@OneToOne (cascade=CascadeType.PERSIST)
-	private User user;
+	private String cartProductName;*/
 	
-	@OneToMany(fetch=FetchType.EAGER)
-	@JoinColumn(name="id")
-	private Set<CartItem> cartItem=new HashSet<CartItem>();
-	/*@OneToMany(targetEntity=Product.class, fetch=FetchType.EAGER, mappedBy="category") // make changes
+	
+		/*@OneToMany(targetEntity=Product.class, fetch=FetchType.EAGER, mappedBy="category") // make changes
 	private Set<Product> product=new HashSet<Product>(0);*/
+	
 	@Override
 	public String toString() {
-		return "Cart [id=" + cartId + ", totalItems=" + totalItems + ", grandTotal=" + grandTotal +"]";
+		return "Cart [id=" + id + ", totalItems=" + totalItems + ", grandTotal=" + grandTotal +"]";
 	}
+	
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 
 	public Set<CartItem> getCartItem() {
 		return cartItem;
@@ -70,75 +111,20 @@ public class Cart implements Serializable
 	}
 
 	public Cart()
-	{}
+	{System.out.println("cart constructor");}
 	
-	public Cart(int cartId,int cartProductId, User cartUserDetails, double cartPrice, int cartStock, String cartProductName  )
-	{
-		this.cartId= cartId;
-		this.cartProductId=cartProductId;
-		this.cartUserDetails= cartUserDetails;
-		this.cartPrice=cartPrice;
-		this.cartStock=cartStock;
-		/*this.cartImage=cartImage;
-		*/
-		
-	}
+	
 
-	public int getCartId() {
-		return cartId;
-	}
+	
 
-	public void setCartId(int cartId) {
-		this.cartId = cartId;
-	}
 
-	public int getCartProductId() {
-		return cartProductId;
-	}
+	
 
-	public void setCartProductId(int cartProductId) {
-		this.cartProductId = cartProductId;
-	}
 
-	public User getCartUserDetails() {
-		return cartUserDetails;
-	}
 
-	public void setCartUserDetails(User cartUserDetails) {
-		this.cartUserDetails = cartUserDetails;
-	}
 
-	public double getCartPrice() {
-		return cartPrice;
-	}
 
-	public void setCartPrice(double cartPrice) {
-		this.cartPrice = cartPrice;
-	}
-
-	public int getCartStock() {
-		return cartStock;
-	}
-
-	public void setCartStock(int cartStock) {
-		this.cartStock = cartStock;
-	}
-
-	public String getCartImage() {
-		return cartImage;
-	}
-
-	public void setCartImage(String cartImage) {
-		this.cartImage = cartImage;
-	}
-
-	public String getCartProductName() {
-		return cartProductName;
-	}
-
-	public void setCartProductName(String cartProductName) {
-		this.cartProductName = cartProductName;
-	}
+	
 	
 
 }

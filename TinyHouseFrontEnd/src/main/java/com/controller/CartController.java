@@ -63,26 +63,26 @@ public class CartController
 			model.addAttribute("userClickViewCart", true);
 			return "index";
 			}
-	 @RequestMapping(value="/prodDetails/{pid}")
-	 public ModelAndView prodDet (@PathVariable("pid")int pid)
-	 {
-		 System.out.println("entered prod details");
-		 ModelAndView mv=new ModelAndView();
-		 Product prod= productDaoImpl.findByPID(pid);
-		 mv.addObject("prod", prod);
-		 mv.setViewName("productDetails");
-		 return mv;
-	 }
+		/*@RequestMapping(value="addingCartDemo/{pid}")
+		 public ModelAndView addingCartDemo(@PathVariable("pid")int pid)
+		 {
+			 System.out.println("pid "+pid+"entered cart details");
+			 ModelAndView mv=new ModelAndView();
+			 Product prod= productDaoImpl.findByPID(pid);
+			 mv.addObject("prod", prod);
+			 mv.setViewName("cart");
+			 return mv;
+		 }*/
 	
 	 
-	 @RequestMapping(value="/addToCart/{id}", method=RequestMethod.POST)
-	 public String addtocart(@PathVariable("pid") int pid, Principal principal, Model model) {
-
-			Product product = productDaoImpl.findByPID(pid);//get(pid);
+	 @RequestMapping(value="addToCart/{pid}")
+	 public String addtocart(@PathVariable("pid")int pid, Principal principal, Model model) {
+System.out.println("path way entry");
+		Product product = productDaoImpl.findByPID(pid);//get(pid);
 			User user = userDaoImpl.findUserByEmail(principal.getName());
 			Cart cart = user.getCart();
 			
-			CartItem cartItem = cartItemDaoImpl.getCartItemByCartIdAndProductId(cart.getCartId(), product.getPid());
+			CartItem cartItem = cartItemDaoImpl.getCartItemByCartIdAndProductId(cart.getId(), product.getPid());
 			Set<CartItem> cartItems = null;
 			if (cartItem == null) {
 				cartItem = new CartItem();
@@ -110,7 +110,7 @@ public class CartController
 			
 		
 
-			return "redirect:/cart/user/viewcart";
+			return "redirect:/cart";
 
 		}
 	/* @RequestMapping(value="/addToCart", method=RequestMethod.POST)
