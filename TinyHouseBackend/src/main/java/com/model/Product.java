@@ -1,6 +1,8 @@
 package com.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -10,6 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 @Entity
 public class Product implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	private int pid;
@@ -23,7 +29,17 @@ public class Product implements Serializable
 	@ManyToOne(fetch= FetchType.EAGER)
 	@JoinColumn(name="sid")
 	private Supplier supplier;
+	@OneToMany(targetEntity=CartItem.class,mappedBy="product",fetch=FetchType.EAGER)
+	private Set<CartItem> cartItem=new HashSet<CartItem>();
 	
+	/*@OneToMany(targetEntity=Product.class, fetch=FetchType.EAGER, mappedBy="category") // make changes
+	private Set<Product> product=new HashSet<Product>(0);
+	*/public Set<CartItem> getCartItem() {
+		return cartItem;
+	}
+	public void setCartItem(Set<CartItem> cartItem) {
+		this.cartItem = cartItem;
+	}
 	@Transient
 	MultipartFile pimage;
 	private String imgName;

@@ -25,10 +25,7 @@ public class CartDaoImpl implements CartDao
 		Session session=sessionFactory.getCurrentSession();
 		session.saveOrUpdate(cart);	
    
-		/*Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		session.persist(cart);
-		session.getTransaction().commit();*/
+		
 	}
 	
 	public CartDaoImpl(SessionFactory sessionFactory)
@@ -63,7 +60,7 @@ public class CartDaoImpl implements CartDao
 		Session session =sessionFactory.openSession();
 		Cart cr=null;
 		session.beginTransaction();
-		cr= (Cart)session.createQuery("from Cart where userMailId=:email and cartProductId=:id").setString("email", userEmail).setInteger("pid", cartProductId).uniqueResult();
+		cr= (Cart)session.createQuery("from Cart where userMailId=:email and cartProductId=:id").setString("email", userEmail).setInteger("id", cartProductId).uniqueResult();
 		System.out.println("getCartById");
 		session.getTransaction().commit();
 		System.out.println("getCartById bye");

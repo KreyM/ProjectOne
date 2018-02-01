@@ -2,8 +2,7 @@ package com.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -34,7 +33,18 @@ public class User implements Serializable
 	@Size( min=8, max=10, message="Enter valid number")
 	private String phone;
 	private boolean enables;
-	
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
+	private Cart cart;
+
+	public Cart getCart() {
+		return cart;
+	}
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	public String getEmail() {
 		return email;
 	}

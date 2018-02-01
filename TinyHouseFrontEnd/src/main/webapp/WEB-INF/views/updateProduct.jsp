@@ -16,7 +16,7 @@
 <body >
 <jsp:include page="header.jsp"></jsp:include>
 <div class="container"><br>
- <c:url value="/updateProd" var="pru"></c:url>
+ <c:url value="/productUpdate" var="pru"></c:url>
 	<form method="post"   action="${pageContext.request.contextPath}/admin/productUpdate" enctype="multipart/form-data">
 		<span id="reauth-email" class="reauth-email"></span>
 		<input type="hidden" name="pid" value="${prod.pid }">
@@ -36,28 +36,45 @@
 					<div class="form-group">
 					<table>
 					<tr>
-						<td> Select Supplier
-						<td><select class="form-control" name="pSupplier" required>
-								${prod.supplier.supplierName }
+						<td> Select Supplier</td>
+						<td><select class="form-control" name="sid"  required>
+								
 								<c:forEach items="${satList}" var="sat">
-								  <option value="${sat.sid}"> ${sat.supplierName}</option>
+								<%--   <option value="${sat.sid}"> ${sat.supplierName}
+							
+								  
+								  </option> --%>
+								  <option> ${sat.supplierName}</option>
+								  
+								 <%--  <ins><command label='<c:set>${prod.supplier.sid}=${sat.sid} </c:set>'></command></ins> --%>
 								</c:forEach>
+								
 							</select>
-					</td>
+							</td>
+							
+			
+					
 					</tr>
+					
 					</table>
+					<h2>${prod.supplier.sid} hi</h2>
+						
 					</div>
 					
 					<div class="form-group">
 					<table>
 					<tr>
 						<td> Select Category</td>
-						<td><select class="form-control" name="pCategory" required>
-								 ${prod.category.cname}<!-- //<option> removing since the present option was coming twice in the drop down</option> -->
+						<td><select class="form-control" name="cat.cid" value=" ${prod.category.cname}" required>
+						
+								<!-- //<option> removing since the present option was coming twice in the drop down</option> -->
 								<c:forEach items="${catList}" var="cat">
 								  <option value="${cat.cid}"> ${cat.cname}</option>
+								  
 								</c:forEach>
+								
 							</select>
+							
 					</td>
 					</tr>
 					</table>
@@ -67,6 +84,7 @@
 					<td> <input class="form-control" type="file" name="file" accept="image/*"> Current Image : ${prod.imgName}</td>
 					</div>
 					<br><br>
+						<input type="hidden" name="sid" value="${prod.supplier.sid }">
 					<button class="btn btn-md btn-primary" type="submit">
 					Update
 					</button>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow  http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+
+	<!-- It will create an instance and keep it inside flowScope -->
+
+	<var class="com.model.User" name="user" />
+
+	<!-- Executed when webFlow is triggered -->
+
+	<on-start>
+
+		<!-- Registrationhandler is java class available through annotated Registrationhandler.java class.here we are calling it’s initFlow() method. -->
+		<evaluate result="flowScope.cartModel" expression="cartHandler.initFlow()" />
+
+	</on-start>
+
+	<!-- if not specified the first view state is the starting state -->
+
+	<view-state model="flowScope.cartModel" view="checkoutProcess/checkout"	id="start">
+
+		<transition to="addShippingAddress" on="add" />
+
+		<transition to="beforeOrderSummary" on="next" />
+
+	</view-state>
+
+	<action-state id="beforeOrderSummary">
+
+		<evaluate
+			expression="cartHandler.setShippingAddress(flowScope.cartModel, cartModel.addressid)" />
+		<transition to="orderSummary" on="success" />
+
+	</action-state>
+
+	<view-state model="address" view="checkoutProcess/newaddress" id="addShippingAddress">
+
+		<transition to="orderSummary" on="add" />
+
+		<transition to="start" on="back" />
+
+		<on-exit>
+
+			<evaluate	expression="cartHandler.saveNewShippingAddress(cartModel,address)" />
+
+		</on-exit>
+
+	</view-state>
+	
+	<view-state model="flowscope.cartModel" view="checkoutProcess/orderSummary"	id="orderSummary">
+
+		<transition to="payment" on="submit" />
+
+	</view-state>
+	
+	<view-state model="flowscope.cartModel" view="checkoutProcess/payment" id="payment">
+
+		<transition to="placeOrder" on="submit" />
+
+	</view-state>
+
+	<action-state id="placeOrder">
+
+		<evaluate expression="cartHandler.saveOrder(cartModel)" />
+
+		<transition to="success" on="success" />
+
+		<transition to="failure" on="failure" />
+	<!-- <on-exit>
+		
+			<evaluate expression="cartHandler.getReceipt(cartModel)" />
+		</on-exit> -->
+
+	</action-state>
+
+	<end-state view="checkoutProcess/Success" id="success" />
+
+</flow>

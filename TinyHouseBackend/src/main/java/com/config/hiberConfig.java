@@ -16,6 +16,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.DaoImpl.CartDaoImpl;
+import com.DaoImpl.CartItemDaoImpl;
 import com.DaoImpl.CategoryDaoImpl;
 
 
@@ -24,6 +25,7 @@ import com.DaoImpl.ProductDaoImpl;
 import com.DaoImpl.SupplierDaoImpl;
 import com.DaoImpl.UserDaoImpl;
 import com.model.Cart;
+import com.model.CartItem;
 import com.model.Category;
 import com.model.Orders;
 import com.model.Product;
@@ -46,7 +48,6 @@ private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/tested2";
 
 	@Bean("dataSource")
 	public DataSource getDataSource() {
-		// providing the database connections
 		System.out.println("hibernate initiated........");
 		BasicDataSource datasource = new BasicDataSource();
 		datasource.setDriverClassName(DATABASE_DRIVER);
@@ -85,7 +86,7 @@ private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/tested2";
 		lsfb.addAnnotatedClass(Product.class);
 		lsfb.addAnnotatedClass(Cart.class);
 		lsfb.addAnnotatedClass(Orders.class);
-		
+		lsfb.addAnnotatedClass(CartItem.class);
 		//lsfb.scanPackages("com.User");
 		System.out.println("SESSION FACTORY BEAN.......");
 		return lsfb.buildSessionFactory();
@@ -113,6 +114,7 @@ private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/tested2";
 		return new SupplierDaoImpl(sef);
 		
 	}
+	
 
 	@Autowired
 	@Bean(name="ProductDaoImpl")
@@ -127,6 +129,12 @@ private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/tested2";
 	public CartDaoImpl saveCartData(SessionFactory sf)
 	{
 		return new CartDaoImpl(sf);
+	}
+	@Autowired
+	@Bean(name="CartItemDaoImpl")
+	public CartItemDaoImpl saveCartItemData(SessionFactory sf)
+	{
+		return new CartItemDaoImpl(sf);
 	}
 	
 	@Autowired

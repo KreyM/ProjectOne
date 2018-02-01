@@ -22,6 +22,8 @@ import com.DaoImpl.ProductDaoImpl;
 import com.DaoImpl.SupplierDaoImpl;
 import com.model.*;
 
+import net.bytebuddy.asm.Advice.This;
+
 @Controller
 @RequestMapping("/admin")
 public class adminController 
@@ -163,24 +165,52 @@ public class adminController
 	}
 	/*157*/
 	
-	@RequestMapping("/updateProd")
+	/*@RequestMapping("/updateProd")
 	public String updateProduct(@RequestParam("pid") int pid, Model model)
 	{
 		ModelAndView mav =new ModelAndView();
 		Product p=productDaoImpl.findByPID(pid);
 		model.addAttribute("productdata", prodlist());
 		model.addAttribute("product1",new Product());
-		/*mav.addObject("prod",p);
+		mav.addObject("prod",p);
 		mav.addObject("catList",categoryDaoImpl.retrieve());
 		mav.addObject("satList", supplierDaoImpl.retrieve());
-		mav.setViewName("updateProduct");*/
+		mav.setViewName("updateProduct");
 		return "updateProduct";
-	/*	167*/
+		167
+	}*/
+	
+	@RequestMapping("/updateProd")
+	public ModelAndView updateProduct(@RequestParam("pid") int pid, Model model)
+	{
+		ModelAndView mav =new ModelAndView();
+		Product p=productDaoImpl.findByPID(pid);
+		model.addAttribute("productdata", prodlist());
+		model.addAttribute("product1",new Product());
+		
+		mav.addObject("catList",categoryDaoImpl.retrieve());
+		mav.addObject("satList", supplierDaoImpl.retrieve());
+		mav.addObject("prod",p);
+		mav.setViewName("updateProduct");
+		return mav;
+		
+	}
+	@RequestMapping("/updateSupp")
+	public ModelAndView updateSupplier(@RequestParam("sid") int sid)
+	{
+		ModelAndView mav =new ModelAndView();
+		Supplier supp= supplierDaoImpl.findBySID(sid);
+		
+		mav.addObject("supplier",supp);
+		
+		mav.setViewName("updateSupplier");
+		return mav;
+	
 	}
 		
-	@RequestMapping(value="/productUpdate", method=RequestMethod.POST)
-	 public String updateProd(Product product, Model model)
-	{/*
+	/*@RequestMapping(value="/productUpdate", method=RequestMethod.POST)
+	 public String updateProd(HttpServletRequest request, @RequestParam("file")MultipartFile file)
+	{
 		System.out.println("somewhat");
 		int pid= request.getIntHeader("pid");
 			//	getParameter("pid"); 
@@ -215,25 +245,22 @@ public class adminController
 			e.printStackTrace();
 			System.out.println("not working");
 		}*/
-		productDaoImpl.updateProduct(product);//editProduct(product);
-		model.addAttribute("prolist",this.productDaoImpl.retrieve());//getProductList());
+		 	@RequestMapping(value="/productUpdate", method=RequestMethod.POST)
+	 public String updateProd(Product product, Model model)
+	 {
+	 productDaoImpl.updateProduct(product);//editProduct(product);
+		model.addAttribute("prodlist",this.productDaoImpl.retrieve());
+		model.addAttribute("catlist",this.categoryDaoImpl.retrieve());
+		model.addAttribute("satlist", this.supplierDaoImpl.retrieve());
+		//model.addAttribute("catlist", this.supplierDaoImpl.findBySID(Integer.parseInt(sat)));
+		//getProductList());
 		//return "ProductPage";
+		
 		return "modal";
 	}
 	
 	
-	@RequestMapping("/updateSupp")
-	public ModelAndView updateSupplier(@RequestParam("sid") int sid)
-	{
-		ModelAndView mav =new ModelAndView();
-		Supplier supp= supplierDaoImpl.findBySID(sid);
-		
-		mav.addObject("supplier",supp);
-		
-		mav.setViewName("updateSupplier");
-		return mav;
 	
-	}
 	@RequestMapping(value="/supplierUpdate",method=RequestMethod.POST)
 	public String updatesupplier(Supplier supplier,Model model)
 	{
