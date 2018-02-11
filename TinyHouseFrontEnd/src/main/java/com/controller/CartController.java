@@ -75,7 +75,7 @@ public class CartController
 		 }*/
 	
 	 
-	 @RequestMapping(value="addToCart/{pid}")
+	 @RequestMapping(value="/addToCart/{pid}")
 	 public String addtocart(@PathVariable("pid")int pid, Principal principal, Model model) {
 System.out.println("path way entry");
 		Product product = productDaoImpl.findByPID(pid);//get(pid);

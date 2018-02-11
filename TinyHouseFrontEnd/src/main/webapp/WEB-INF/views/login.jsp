@@ -27,9 +27,10 @@
 		<input type="password" name="password" class="login-box" required>
 	<hr>
 		<button class="btn btn-lg btn-primary" type="submit">LOGIN</button>
-		<button class="btn btn-lg btn-warning" type="reset">Cancel</button>
+		<button class="btn btn-lg btn-warning" type="reset">Clear</button>
+	
 	</form>
-
+	<a href="/TinyHouseFrontEnd"><button class="btn btn-lg btn-secondary" >Back</button></a>
 </div>
 <jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>
 

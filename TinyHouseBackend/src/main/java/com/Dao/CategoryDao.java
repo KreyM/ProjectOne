@@ -7,5 +7,5 @@ public interface CategoryDao {
 	public List<Category> retrieve();
 	public Category findByCID(int cid);
 	public  void updateCat(Category cat) ;
-	public boolean updateCategory(Category category);
+	public void updateCategory(Category category);
 }

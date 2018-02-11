@@ -16,13 +16,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.Dao.*;
+
 import com.DaoImpl.CategoryDaoImpl;
 import com.DaoImpl.ProductDaoImpl;
 import com.DaoImpl.SupplierDaoImpl;
 import com.model.*;
 
-import net.bytebuddy.asm.Advice.This;
 
 @Controller
 @RequestMapping("/admin")
@@ -207,7 +206,58 @@ public class adminController
 		return mav;
 	
 	}
-		
+	@RequestMapping(value="/productUpdate", method=RequestMethod.POST)
+	 public String updateProd(@ModelAttribute("product")Product product,@RequestParam("pimage")MultipartFile fileDetail,Model m)
+	 {
+		System.out.println("Before update");
+		 productDaoImpl.update(product);
+		//productDaoI.updateProduct(product);
+		 System.out.println("product added");
+		//String path=" D:\frontend\TinyHouseFrontEnd\src\main\resources";
+		String path = "D:/frontend/TinyHouseFrontEnd/src/main/resources/";
+		 String totalFileWithPath=path+String.valueOf(product.getPid())+".jpg";
+		File productImage=new File(totalFileWithPath);
+		System.out.println("total file path" + totalFileWithPath);
+		if(!fileDetail.isEmpty())
+		{
+		 try
+		 {
+			 System.out.println("In try block");
+			byte fileBuffer[]=fileDetail.getBytes();
+			System.out.println("Get Bytes" + fileDetail.getBytes()+ fileBuffer);
+			FileOutputStream fos=new FileOutputStream(productImage);
+			System.out.println("output stream object");
+			BufferedOutputStream bs=new BufferedOutputStream(fos);
+			System.out.println("output stream object created");
+			bs.write(fileBuffer);
+			System.out.println("write buffer");
+			bs.close();
+			System.out.println("image uploaded");
+		 }
+		 catch(FileNotFoundException ex)
+		 {
+			 System.out.println("exception arised " + ex);
+			 ex.printStackTrace();
+		 }
+		 
+		 catch(Exception e)
+		 {
+			 System.out.println("In catch block");
+			 m.addAttribute("error",e.getMessage());
+		  }
+		}
+		else
+		{
+			 System.out.println("In else block");
+			m.addAttribute("error","Problem in File Uploading");
+		}
+		 System.out.println("Out of try block");
+		Product product1=new Product();
+		System.out.println("Product object created");
+		m.addAttribute(product1);		
+	
+	return "modal";
+	 }
 	/*@RequestMapping(value="/productUpdate", method=RequestMethod.POST)
 	 public String updateProd(HttpServletRequest request, @RequestParam("file")MultipartFile file)
 	{
@@ -245,7 +295,8 @@ public class adminController
 			e.printStackTrace();
 			System.out.println("not working");
 		}*/
-		 	@RequestMapping(value="/productUpdate", method=RequestMethod.POST)
+	
+	/* 	@RequestMapping(value="/productUpdate", method=RequestMethod.POST)
 	 public String updateProd(Product product, Model model)
 	 {
 	 productDaoImpl.updateProduct(product);//editProduct(product);
@@ -259,7 +310,7 @@ public class adminController
 		return "modal";
 	}
 	
-	
+	*/
 	
 	@RequestMapping(value="/supplierUpdate",method=RequestMethod.POST)
 	public String updatesupplier(Supplier supplier,Model model)
@@ -269,8 +320,18 @@ public class adminController
 		model.addAttribute("satlist",this.supplierDaoImpl.retrieve());
 		
 		supplierDaoImpl.updateSupplier(supplier);
-		return "modal";
+		return "modalUpdate";
 	}
+	@RequestMapping(value="/categoryUpdate", method=RequestMethod.POST)
+	 public String updateCat(Category category, Model model)
+	{
+		
+	
+		model.addAttribute("catList", this.categoryDaoImpl.retrieve());
+		categoryDaoImpl.updateCategory(category);
+		return "modalUpdate";
+	}
+	
 	
 	@RequestMapping("/updateCat")
 	public ModelAndView updateCategory(@RequestParam("cid") int cid)
@@ -285,27 +346,6 @@ public class adminController
 	
 	}
 	
-	@RequestMapping(value="/categoryUpdate", method=RequestMethod.POST)
-	 public String updateCat(HttpServletRequest request)
-	{
-		
-		int cid=request.getIntHeader("cid");
-				//getIntHeader(Integer.parseInt(request.getParameter("cid")));// (Integer.parseInt(request.getParameter("cid")));
-				/*
-*/			//	getParameter("pid"); 
-		Category cat= new Category();
-		cat.setCname(request.getParameter("cname"));
-		cat.setCid(Integer.parseInt(request.getParameter("cid")));
-		//prod.setStock(Integer.parseInt(request.getParameter("stock")));
-		
-		categoryDaoImpl.updateCategory(cat);
-		System.out.println(" b4 somewhat after update");
-
-		System.out.println("somewhat after update");
-		
-		
-		return "modal";
-	}
 	
 		
 }

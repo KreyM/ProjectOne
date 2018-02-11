@@ -15,6 +15,8 @@ public class Cart implements Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -22,14 +24,16 @@ public class Cart implements Serializable
 	private double grandTotal;
 	
 	//private int cartProductId;
-	@OneToOne (cascade=CascadeType.PERSIST)
+	@OneToOne (cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@JoinColumn(name="userId")
+	/*@JoinColumn(name="email")	*/
 	private User user;
 
 	@OneToMany(fetch=FetchType.EAGER)
 	@JoinColumn(name="id")
 	private Set<CartItem> cartItem=new HashSet<CartItem>();
 
-	public Cart(int cartId, User cartUserDetails, double cartPrice, int cartStock )
+	/*public Cart(int cartId, User cartUserDetails, double cartPrice, int cartStock )
 	{
 		this.id= cartId;
 		this.grandTotal=cartPrice;
@@ -40,10 +44,10 @@ public class Cart implements Serializable
 		//this.cartUserDetails= cartUserDetails;
 		//this.cartPrice=cartPrice;
 		//this.cartStock=cartStock;
-		/*this.cartImage=cartImage;
-		*/
+		this.cartImage=cartImage;
 		
-	}
+		
+	}*/
 	/*@OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name="email")
 	private User cartUserDetails;

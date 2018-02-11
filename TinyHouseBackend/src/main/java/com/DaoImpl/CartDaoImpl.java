@@ -14,7 +14,7 @@ import com.Dao.CartDao;
 import com.model.Cart;
 import com.model.Product;
 
-@Repository("CartDaoImpl")
+@Repository/*("CartDaoImpl")*/
 public class CartDaoImpl implements CartDao
 {
 	@Autowired
@@ -22,12 +22,14 @@ public class CartDaoImpl implements CartDao
 
 	public void insertCart(Cart cart) 
 	{
-		Session session=sessionFactory.getCurrentSession();
+		System.out.println("1 insercart");
+		Session session=sessionFactory.openSession();
+		System.out.println("2 insercart");
 		session.saveOrUpdate(cart);	
-   
+		System.out.println("3 insercart");
 		
 	}
-	
+	@Autowired
 	public CartDaoImpl(SessionFactory sessionFactory)
 	{
 		this.sessionFactory=sessionFactory;

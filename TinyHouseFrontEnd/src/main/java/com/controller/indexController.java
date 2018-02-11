@@ -1,16 +1,22 @@
 package com.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.DaoImpl.CartDaoImpl;
@@ -22,6 +28,8 @@ import com.model.Cart;
 import com.model.CartItem;
 import com.model.Product;
 import com.model.User;
+
+
 
 @Controller
 public class indexController 
@@ -44,6 +52,15 @@ public class indexController
 	public String home()
 	{
 		return "index";
+	}
+	@RequestMapping("/cartCreation")
+	public ModelAndView cartCreation()
+	{
+		ModelAndView mav =new ModelAndView();
+		mav.addObject("prodList",productDaoImpl.retrieve());
+		mav.setViewName("cartCreation");
+		return mav;
+		
 	}
 	@RequestMapping("/aboutUs")
 	public String companyInfo()
@@ -75,13 +92,45 @@ public class indexController
 		}
 		else
 		{
-		user.setRole("ROLE_USER");
-		userDaoImpl.insertUser(user);
-		//userDaoImpl.insertUser(user);
-		mav.setViewName("index");
+			user.setRole("ROLE_USER");
+	userDaoImpl.insertUser(user);
+			
+			System.out.println("user created");
+			 Cart cart = new Cart();
+			
+			 cart.setUser(user);
+			 user.setCart(cart);
+			 cartDaoImpl.insertCart(cart);
+	userDaoImpl.insertUser(user);
+			/*Cart cm=new Cart();
+			cm.setCartUserDetails(user);
+			user.setRole("ROLE_USER");
+			user.setCartDetails(cm);
+			userDao.insertUser(user);
+		 */
+		 System.out.println("cart made in user");
+		 
+			
+		
+		mav.setViewName("modalRegister");
 		}
 		return mav;
+		
 	}
+	/* sir code
+	 * public void saveRegistrationDetails(RegisterModel registerModel) {
+		User user = registerModel.getUser();
+		Address billingAddress = registerModel.getBillingAddress();
+		billingAddress.setUser(user);
+		Set<Address> address = new HashSet<Address>();
+		address.add(billingAddress);
+		user.setAddress(address);
+		userDAO.add(user);
+		Cart cart = new Cart(); // set the user
+		cart.setUser(user); // save the cart 
+		user.setCart(cart);
+		userDAO.update(user);
+			}*/
 	@RequestMapping("/productList")
 	public ModelAndView prodlist() 
 	{
@@ -90,14 +139,41 @@ public class indexController
 		mav.setViewName("productAdmin");
 		return mav;
 	}
-	
+	@RequestMapping(value="/saveCart", method=RequestMethod.POST)
+	@Transactional 
+	public String saveCart(HttpServletRequest request)
+	{
+	 CartItem cartItem=new CartItem();
+		cartItem.setProduct(productDaoImpl.findByPID(Integer.parseInt(request.getParameter("pProduct"))));
+		/*Product prod = new Product();
+		prod.setPname(request.getParameter("pname"));
+		prod.setPrice(Double.parseDouble(request.getParameter("price")));
+		prod.setDescription(request.getParameter("description"));
+		prod.setStock(Integer.parseInt(request.getParameter("stock")));
+		prod.setCategory(categoryDaoImpl.findByCID(Integer.parseInt(request.getParameter("pCategory"))));
+		prod.setSupplier(supplierDaoImpl.findBySID(Integer.parseInt(request.getParameter("pSupplier"))));
+		*/
+		/*productDaoImpl.insertProduct(prod);
+		 * 
+		 * 	
+	@RequestMapping("/productList")
+	public ModelAndView prodlist() 
+	{ModelAndView mav =new ModelAndView();
+		mav.addObject("prodList",productDaoImpl.retrieve());
+		mav.setViewName("productAdmin");
+		return mav;}
+			 * */
+		cartItemDaoImpl.insertCartItem(cartItem);
+		return "modal";
+	}
+
 	@RequestMapping(value="/productCustList")
 	public ModelAndView getCustTable(@RequestParam("cid") int cid)
 	{
 		ModelAndView mav= new ModelAndView();
 		mav.addObject("prodList", productDaoImpl.getProdBycatId(cid));
 		mav.setViewName("productCustList");
-		System.out.println("check pheli tarik");
+		
 		return mav;
 	}
 	 @RequestMapping(value="prodDetails/{pid}")
@@ -120,7 +196,7 @@ public class indexController
 		 mv.setViewName("cart");
 		 return mv;
 	 }
-	 
+	 	
 
 	 
 	 @RequestMapping(value="addToCart/{pid}")
@@ -128,6 +204,8 @@ public class indexController
 System.out.println("path way entry");
 		Product product = productDaoImpl.findByPID(pid);//get(pid);
 			User user = userDaoImpl.findUserByEmail(principal.getName());
+			
+			//User user = userDaoImpl.findUserByUserId(principal.getName());
 			Cart cart = user.getCart();
 			System.out.println(" hi= cart id");
 			System.out.println(cart.getId());

@@ -14,15 +14,17 @@
 <body>
 <jsp:include page="header.jsp"></jsp:include>
 <div class="container"><br>
-	<c:url value="/updateCat" var="pru"></c:url>
+
+	<c:url value="/categoryUpdate" var="pru"></c:url>
 	<form method="post"   action="${pageContext.request.contextPath}/admin/categoryUpdate" >
-		<span id="reauth-email" class="reauth-email"></span>
-		<input type="hidden" name="cid" value="${cat.cid }">
-		<h3 class="input-title"> Category ID</h3> <br>
-		<input value="${cat.cid }" type="number" name="cid" >
+			<span id="reauth-cid" class="reauth-cid"></span>
 		
+		<input type="hidden" name="cid" value="${category.cid }">
+		<h3 class="input-title"> Category ID : ${category.cid }</h3> <br>
+		<%-- <input value="${category.cid }" type="number" name="cid" >
+		 --%>
 		<h3 class="input-title"> Category Name</h3> <br>
-		<input value="${cat.cname }" type="text" name="cname" >
+		<input value="${category.cname }" type="text" name="cname" >
 		
 					
 					<br><br>
@@ -32,10 +34,10 @@
 					<button class="btn btn-md btn-warning" type="reset">
 					Reset
 					</button>
-					<a href="${pageContext.request.contextPath}/admin/categoryList"><button class="btn btn-md btn-secondary"  > Back </button></a>
+				
 				</form>
 	
-	
+		<a href="${pageContext.request.contextPath}/admin/categoryList"><button class="btn btn-md btn-secondary"  > Back </button></a>
 	<br><br>
 </div>
 

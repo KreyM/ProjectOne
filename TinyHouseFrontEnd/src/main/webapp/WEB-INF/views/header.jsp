@@ -21,7 +21,7 @@
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <style>
 .dropbtn {
-    background-color: #4CAF50;
+    background-color: black;
     color: white;
     padding: 16px;
     font-size: 16px;
@@ -49,14 +49,14 @@
     display: block;
 }
 
-.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown-content a:hover {background-color: aqua}
 
 .dropdown:hover .dropdown-content {
     display: block;
 }
 
 .dropdown:hover .dropbtn {
-    background-color: #3e8e41;
+    background-color: black;
 }
 </style>
 </head>
@@ -82,6 +82,7 @@
 		</ul>
 		</div>	         
             </security:authorize>  
+       
         <li class="dropdown">
           <a class="dropdown-hover" data-hover="dropdown" href="#">
             Category Choice <span class="caret"></span>
@@ -96,9 +97,9 @@
         </li>
       
       
-      <li><!-- <a href="#">Page 3</a> --></li>
+      <li> <a href="${pageContext.request.contextPath }/cartCreation">cart creation</a></li>
 <security:authorize access="hasRole('ROLE_ADMIN')">
-     <li><a href="admin/adding">Admin</a></li>
+     <li><a href="${pageContext.request.contextPath }/admin/adding">Admin</a></li>
 </security:authorize>
     </ul>
     
@@ -111,7 +112,7 @@
      
      <c:if test="${pageContext.request.userPrincipal.name!=null }">
      <security:authorize access="hasRole('ROLE_USER')">
-     <li><a href="${pageContext.request.contextPath }/goToCart"> My Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a> </li>
+     <li><a href="<%-- ${pageContext.request.contextPath }/ --%>/goToCart"> My Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a> </li>
     		</security:authorize>
     	 <li><a>Let's Go Tiny,${pageContext.request.userPrincipal.name} </a></li>
      		<li><a href="${pageContext.request.contextPath }/logout"> Logout, Bye</a></li>

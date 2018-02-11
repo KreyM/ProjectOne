@@ -32,28 +32,31 @@
 		
 		<h3 class="input-title"> Product Stock</h3> <br>
 		<input value="${prod.stock }" type="number" name="stock" required/>
-					
-					<div class="form-group">
+		<%-- 
+		<h3 class="input-title"> Product Category</h3> <br> <h3>${prod.category.cname}</h3>
+		<input value="${prod.stock }" type="number" name="stock" required/>
+		
+		<h3 class="input-title"> Product Supplier</h3> <br> <h3>${prod.supplier.supplierName}</h3>
+		//<input value="${prod.supplier.sid}" type="number" name="stock" required/>
+		
+					 --%>
+					<%-- <div class="form-group">
 					<table>
 					<tr>
 						<td> Select Supplier</td>
 						<td><select class="form-control" name="sid"  required>
 								
 								<c:forEach items="${satList}" var="sat">
-								<%--   <option value="${sat.sid}"> ${sat.supplierName}
+								  <option value="${sat.sid}"> ${sat.supplierName}
 							
 								  
-								  </option> --%>
+								  </option>
 								  <option> ${sat.supplierName}</option>
 								  
-								 <%--  <ins><command label='<c:set>${prod.supplier.sid}=${sat.sid} </c:set>'></command></ins> --%>
+								  <ins><command label='<c:set>${prod.supplier.sid}=${sat.sid} </c:set>'></command></ins>
 								</c:forEach>
-								
 							</select>
 							</td>
-							
-			
-					
 					</tr>
 					
 					</table>
@@ -78,13 +81,12 @@
 					</td>
 					</tr>
 					</table>
-					</div>
+					</div> --%>
 					<div class="fileinput fileinput-new" data-provides="fileinput">
-					<th> Product Image</th>
-					<td> <input class="form-control" type="file" name="file" accept="image/*"> Current Image : ${prod.imgName}</td>
+					<h2>Product Image </h2>  <input class="form-control" type="file" name="file" accept="image/*"> Current Image : ${prod.imgName}
 					</div>
 					<br><br>
-						<input type="hidden" name="sid" value="${prod.supplier.sid }">
+						<%-- <input type="hidden" name="sid" value="${prod.supplier.sid }"> --%>
 					<button class="btn btn-md btn-primary" type="submit">
 					Update
 					</button>

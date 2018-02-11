@@ -14,26 +14,25 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Entity
-@Table(name="UserDemo")
 public class User implements Serializable
 {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Id
+	
 	@Email(message="Enter valid Email" )
 	private String email;
-/*	@Id
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int userId;
 
-	private int id;*/
-
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.PERSIST/*, mappedBy = "user"*/, fetch = FetchType.EAGER)
 	@JoinColumn(name="id")
 	private Cart cart;
 	@NotNull
 	private String name;	
-	private String surname;
+	//private String surname;
 	@NotNull
 	private String password;
 	private String role;
@@ -42,17 +41,14 @@ public class User implements Serializable
 	@Size( min=8, max=10, message="Enter valid number")
 	private String phone;
 	private boolean enables;
-//	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
-//	@JoinColumn(name="id")
-//	private Cart cart;
 
 
-	/*public int getId() {
-		return id;
+	public int getuserId() {
+		return userId;
 	}
-	public void setId(int id) {
-		this.id = id;
-	}*/
+	public void setuserId(int id) {
+		this.userId = userId;
+	}
 	public Cart getCart() {
 		return cart;
 	}

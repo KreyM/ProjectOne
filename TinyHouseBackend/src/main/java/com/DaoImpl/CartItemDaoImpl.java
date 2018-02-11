@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -25,7 +26,7 @@ public class CartItemDaoImpl implements CartItemDao {
 	public CartItem get(int id) {
 		return sessionFactory.getCurrentSession().get(CartItem.class, Integer.valueOf(id));
 	}
-
+	
 	public List<CartItem> list() {
 		return sessionFactory.getCurrentSession().createQuery("FROM CartItem", CartItem.class).getResultList();
 	}
@@ -111,5 +112,14 @@ public class CartItemDaoImpl implements CartItemDao {
 				return false;
 			}
 		
+	}
+	public void insertCartItem(CartItem cartItem) {
+		/*public void insertCartItem(CartItem cartItem)
+		{*/
+			Session session= sessionFactory.openSession();
+			session.beginTransaction();
+			session.persist(cartItem);
+			session.getTransaction().commit();
+		/*}*/
 	}
 }

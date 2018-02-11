@@ -29,7 +29,12 @@ public class ProductDaoImpl implements ProductDao
 		session.persist(product);
 		session.getTransaction().commit();
 	}
-	
+	public Product getProduct(int productId) {
+		
+		Product product=(Product)sessionFactory.getCurrentSession().get(Product.class,productId);
+		return product;
+	}
+
 	public List<Product> retrieve()
 	{
 		Session session=sessionFactory.openSession();
@@ -83,19 +88,44 @@ public class ProductDaoImpl implements ProductDao
 		return prod;	
 	}
 	
-	public void update(Product prod)
+	/*public void update(Product prod)
 	{
 		System.out.println("update enter");
 		Session session= sessionFactory.openSession();
 		session.beginTransaction();
 	
 		//session.update(prod);//saveOrUpdate(prod);//update(prod);
-		session.update("pid", prod);
+		//session.update("pid", prod);
+		session.saveOrUpdate(prod);
 		session.getTransaction().commit();
 		
 		System.out.println("somewhat");
-	}
+	}*/
 	
+	
+	public boolean update(Product product) {
+		try
+		{
+		sessionFactory.getCurrentSession().update(product);
+		return true;
+		}
+		catch(Exception e)
+		{
+		System.out.println("Exception Arised:"+e);
+		return false;
+		}
+	}
+/*	public boolean deleteProduct(Product product) {
+		try
+		{
+			sessionFactory.getCurrentSession().delete(product);
+			return true;
+		}
+		catch(Exception e)
+		{
+		return false;
+		}
+	}*/
 	public void deleteProduct(int pid)
 	{
 		Session session= sessionFactory.openSession();
@@ -104,13 +134,13 @@ public class ProductDaoImpl implements ProductDao
 		session.delete(p);
 		session.getTransaction().commit();
 	}
-	//@Override
-	public void updateProduct(Product product) {
+	/*public void updateProduct(Product product) {
 		Session session=sessionFactory.openSession();
 		Transaction tran=session.beginTransaction(); 
 		session.update(product);
 		tran.commit();
+	}*/
+
 	}
-}
 
 

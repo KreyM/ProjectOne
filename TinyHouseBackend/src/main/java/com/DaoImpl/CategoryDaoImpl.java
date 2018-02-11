@@ -4,6 +4,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -77,8 +78,8 @@ public class CategoryDaoImpl implements CategoryDao {
 		
 	}
 
-	public boolean updateCategory(Category category) {
-		try
+	public void updateCategory(Category category) {
+		/*try
 		{
 		sessionFactory.getCurrentSession().update(category);
 		System.out.println();
@@ -92,7 +93,11 @@ public class CategoryDaoImpl implements CategoryDao {
 		System.out.println();
 		System.out.println("UPDATE FALSE");
 		return false;
-		}
+		}*/
+		Session session=sessionFactory.openSession();
+		Transaction tran=session.beginTransaction(); 
+		session.update(category);
+		tran.commit();
 	}
 
 }

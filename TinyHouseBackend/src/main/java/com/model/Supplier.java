@@ -22,7 +22,9 @@ public class Supplier implements Serializable
 	 *//*
 	private static final long serialVersionUID = 1L;*/
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int sid;
+	
 	private String supplierName;
 	@Pattern(regexp="[\\d]{10}", message="Enter only 10 digits" )
 	@Size( min=8, max=10, message="Enter valid number")

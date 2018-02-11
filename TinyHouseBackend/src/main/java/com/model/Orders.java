@@ -15,7 +15,7 @@ public class Orders implements Serializable
 	private int OrderId;
 	
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn()
 	private User user;
 	
 	private String payment;
