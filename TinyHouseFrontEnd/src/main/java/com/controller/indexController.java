@@ -1,8 +1,5 @@
 package com.controller;
 
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.security.Principal;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
 import org.springframework.web.servlet.ModelAndView;
 
 import com.DaoImpl.CartDaoImpl;
@@ -97,17 +94,23 @@ public class indexController
 			
 			System.out.println("user created");
 			 Cart cart = new Cart();
-			
+			 /*CartItem cartitem = new CartItem();
+			 */
 			 cart.setUser(user);
 			 user.setCart(cart);
-			 cartDaoImpl.insertCart(cart);
+			 System.out.println("user cart mapping done in index controller");
+			 /*cartitem.setCart(cart);
+			 System.out.println("cartitem.setCart(cart); ");*/
+			 /*cart.setCartItem(null);
+			 
+			 System.out.println("cart.setCartItem(null);");
+			*/  cartDaoImpl.insertCart(cart);
+			 System.out.println("cartDaoImpl.insertCart(cart);");
+			 /*cartItemDaoImpl.insertCartItem(cartitem);
+			 System.out.println(" cartItemDaoImpl.insertCartItem(cartitem);");*/
+			
 	userDaoImpl.insertUser(user);
-			/*Cart cm=new Cart();
-			cm.setCartUserDetails(user);
-			user.setRole("ROLE_USER");
-			user.setCartDetails(cm);
-			userDao.insertUser(user);
-		 */
+			
 		 System.out.println("cart made in user");
 		 
 			
@@ -117,20 +120,7 @@ public class indexController
 		return mav;
 		
 	}
-	/* sir code
-	 * public void saveRegistrationDetails(RegisterModel registerModel) {
-		User user = registerModel.getUser();
-		Address billingAddress = registerModel.getBillingAddress();
-		billingAddress.setUser(user);
-		Set<Address> address = new HashSet<Address>();
-		address.add(billingAddress);
-		user.setAddress(address);
-		userDAO.add(user);
-		Cart cart = new Cart(); // set the user
-		cart.setUser(user); // save the cart 
-		user.setCart(cart);
-		userDAO.update(user);
-			}*/
+	
 	@RequestMapping("/productList")
 	public ModelAndView prodlist() 
 	{
@@ -144,6 +134,13 @@ public class indexController
 	public String saveCart(HttpServletRequest request)
 	{
 	 CartItem cartItem=new CartItem();
+	 
+	if(cartItem.getItemId()==0)
+	{
+		cartItemDaoImpl.insertCartItem(cartItem);
+		
+	}
+	
 		cartItem.setProduct(productDaoImpl.findByPID(Integer.parseInt(request.getParameter("pProduct"))));
 		/*Product prod = new Product();
 		prod.setPname(request.getParameter("pname"));
@@ -197,9 +194,56 @@ public class indexController
 		 return mv;
 	 }
 	 	
+	 @RequestMapping(value="/addToCart/{pid}")
+	 public String addtocart(@PathVariable("pid")int pid, Principal principal, Model model) {
+System.out.println("path way entry");
+		Product product = productDaoImpl.findByPID(pid);//get(pid);
+			User user = userDaoImpl.findUserByEmail(principal.getName());
+			Cart cart = user.getCart();
+			System.out.println("product is "+product);
+			System.out.println("user is "+user);
+			System.out.println("cart is "+cart);
+			CartItem cartItem = cartItemDaoImpl.getCartItemByCartIdAndProductId(cart.getId(), product.getPid());
+			System.out.println("18/02/18"+cartItem);
+			/*Set<CartItem> cartItems = null;*/
+			if (cartItem == null) {
+				cartItem = new CartItem();
+				System.out.println("controller : addtocart : cartItem = new CartItem();");
+				cartItem.setCart(cart);
+				System.out.println("controller : addtocart : cartItem.setCart(cart);");
+				cartItem.setProduct(product);
+				System.out.println("controller : addtocart :cartItem.setProduct(product); ");
+				cartItem.setQuantity(1);
+				cartItem.setTotalPrice(product.getPrice());
+				System.out.println("controller : addtocart : cartItem.setTotalPrice(product.getPrice());");
+				cart.setGrandTotal(cart.getGrandTotal() + product.getPrice());
+				cart.setTotalItems(cart.getTotalItems() + 1);
+				System.out.println("controller : addtocart :cart.setTotalItems(cart.getTotalItems() + 1); ");
+				/*cartItems = new HashSet<CartItem>();
+				cartItems.add(cartItem);
+				cart.setCartItem(cartItems);*/
+				cartDaoImpl.updateCart(cart);
+				System.out.println("controller : addtocart : cartDaoImpl.updateCart(cart);");
+				
+			} else {
+				System.out.println("entering into else");
+				cartItem.setQuantity(cartItem.getQuantity() + 1);
+				cartItem.setTotalPrice(cartItem.getTotalPrice() + product.getPrice());
+				cartItem.getCart().setGrandTotal(cart.getGrandTotal() + product.getPrice());
+				cartItem.getCart().setTotalItems(cart.getTotalItems() + 1);
+				cartItemDaoImpl.update(cartItem);
+			}
+			
+
+			
+		
+
+			return "redirect:/cart";
+
+		}
 
 	 
-	 @RequestMapping(value="addToCart/{pid}")
+	/* @RequestMapping(value="addToCart/{pid}")
 	 public String addtocart(@PathVariable("pid")int pid, Principal principal, Model model) {
 System.out.println("path way entry");
 		Product product = productDaoImpl.findByPID(pid);//get(pid);
@@ -240,7 +284,8 @@ System.out.println("path way entry");
 
 			return "redirect:/cart";
 
-		}/*
+		}*/
+	 /*
 	 @RequestMapping(value="/addToCart/{id}", method=RequestMethod.POST)
 	 public String addtocart(@PathVariable("pid") int pid, Principal principal, Model model) {
 System.out.println("path way entry");

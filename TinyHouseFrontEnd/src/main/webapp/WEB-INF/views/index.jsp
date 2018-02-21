@@ -30,13 +30,13 @@
 		
 		<div class="carousel-inner">
 			<div class="item active" class="img-responsive center block"><!-- class="img-rounded" class="img-responsive center block" -->
-				<img   alt="1" src="C:\Users\Krishna Modi\Downloads\1.jpg" align="center" width="70%" height="30 " >
+				<img   alt="1" src="D:\\frontend\\TinyHouseFrontEnd\\src\\main\\webapp\\resources\\1.jpg" align="center" width="70%" height="30 " >
 			</div>
 			<div class="item">
-				<img alt="2"  src="C:\Users\Krishna Modi\Downloads\2.jpg" align="center" width="70%" height="30 px">
+				<img alt="2"  src="D:\\frontend\\TinyHouseFrontEnd\\src\\main\\webapp\\resources\\2.jpg" align="center" width="70%" height="30 px">
 			</div>
 			<div class="item">
-				<img alt="3"  src="C:\Users\Krishna Modi\Downloads\3.jpg" align="center" width="70%" height="30 px">
+				<img alt="3"  src="D:\\frontend\\TinyHouseFrontEnd\\src\\main\\webapp\\resources\\3.jpg" align="center" width="70%" height="30 px">
 			</div>
 		</div>
 		

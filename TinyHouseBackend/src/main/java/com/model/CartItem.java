@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import org.springframework.stereotype.Component;
-@Component
+/*@Component*/
 @Entity
 @Table
 public class CartItem implements Serializable {
@@ -17,15 +17,15 @@ public class CartItem implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
-	private int id;
+	private int itemId;
 	
 	private double totalPrice;
 	
 	private int quantity;
 	
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="cartId")
+	@ManyToOne( fetch=FetchType.EAGER)
+	@JoinColumn(name="id")
 	private Cart cart;
 	
 			
@@ -33,12 +33,14 @@ public class CartItem implements Serializable {
 	@JoinColumn(name="pid")
 	private Product product;
 
-	public int getId() {
-		return id;
+	
+
+	public int getItemId() {
+		return itemId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
 	}
 
 	public double getTotalPrice() {
@@ -63,6 +65,7 @@ public class CartItem implements Serializable {
 
 	public void setCart(Cart cart) {
 		this.cart = cart;
+		System.out.println("setCart done");
 	}
 
 	public Product getProduct() {
@@ -76,9 +79,9 @@ public class CartItem implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+	@Override
 	public String toString() {
-		return "CartItems [id=" + id + ", totalPrice=" + totalPrice + ", quantity=" + quantity + "]";
+		return "CartItems [itemId=" + itemId + ", totalPrice=" + totalPrice + ", quantity=" + quantity + "]";
 	}
 
 

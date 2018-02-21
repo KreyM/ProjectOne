@@ -8,7 +8,8 @@ public interface CartItemDao {
 	CartItem get(int id);
 	List<CartItem> list();
 	boolean add(CartItem cartItem);
-	boolean update(CartItem cartItem);
+/*	boolean update(CartItem cartItem);*/
+	void update(CartItem cartItem);
 	void delete(int id);
 	public CartItem getCartByUserId(int userId); 
 	public CartItem getCartByUserIdAndProduct(int userId, int productId); 

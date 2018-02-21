@@ -112,7 +112,7 @@
      
      <c:if test="${pageContext.request.userPrincipal.name!=null }">
      <security:authorize access="hasRole('ROLE_USER')">
-     <li><a href="<%-- ${pageContext.request.contextPath }/ --%>/goToCart"> My Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a> </li>
+     <li><a href=" ${pageContext.request.contextPath }/cart/goToCart"> My Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a> </li>
     		</security:authorize>
     	 <li><a>Let's Go Tiny,${pageContext.request.userPrincipal.name} </a></li>
      		<li><a href="${pageContext.request.contextPath }/logout"> Logout, Bye</a></li>

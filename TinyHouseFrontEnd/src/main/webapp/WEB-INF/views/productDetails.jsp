@@ -118,28 +118,16 @@
 				     <input type="submit" value="Add To Cart" class="btn btn-primary btn-lg"/> <span class="glyphicon glyphicon-shopping-cart"></span>
 			
 		
-				</form>  
-		
-			
-				
-    		   <a class="btn btn-info" role="button" href="${pageContext.request.contextPath }/addToCart/${prod.pid }">  Details </a>
-   		  <a class="btn btn-primary" role="button" href="${pageContext.request.contextPath }/addToCart/${prod.pid }" ><span class="glyphicon glyphicon-shopping-cart"></span>Add To Cart</a>
-			<br>
-			<br>
-			  <a class="btn btn-primary" role="button" href="${pageContext.request.contextPath }/addingCartDemo/${prod.pid }" ><span class="glyphicon glyphicon-shopping-cart"></span>Add To Cart Demo</a>
-			</div>
-				
-			<%-- <div >
-				<form action="${pageContext.request.contextPath }/ addToCart" method="post">
+				</form>   
+				<%-- <form action="${pageContext.request.contextPath }/ addToCart" method="post">
 				 <label>Product ID</label>  <input type="hidden" value="${prod.pid }" name="pid"/> 
 				 <label>Product Price</label> <input type="hidden" value="${prod.price }" name="price"/> 
 				  <label>Product Name</label> <input type="hidden" value="${prod.pname }" name="pname"/> 
 				   <label></label> <input type="hidden" value="${prod.imgName }" name="imgName"/> 
 				   <label>Qunatity</label> <input type="number" width="20%" class="form-control" name="pQty"/> 
 				     <input type="submit" value="Add To Cart" class="btn btn-primary btn-lg"/> 
-				</form>
+				</form> --%>
 			</div>				
-	 --%>
 			
 	<br><br>
 		<!-- <div class="col-md-9">

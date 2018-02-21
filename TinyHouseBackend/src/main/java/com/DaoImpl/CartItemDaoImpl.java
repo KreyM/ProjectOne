@@ -8,19 +8,33 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.Dao.CartItemDao;
 import com.model.*;
 
-//@Transactional
+//import org.springframework.transaction.annotation.Transactional; @Transactional
 @Repository
 public class CartItemDaoImpl implements CartItemDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
 	
+	public void insertCartItem(CartItem cartItem) {
+	
+		Session session=sessionFactory.openSession();
+		session.beginTransaction();
+		
+		session.save(cartItem);
+		session.getTransaction().commit();
+		System.out.println(" insertCartItem complete");
+		
+			/*Session session= sessionFactory.openSession();
+			session.beginTransaction();
+			session.persist(cartItem);
+			session.getTransaction().commit();*/
+	}
+	@Autowired
 	public CartItemDaoImpl(SessionFactory sessionFactory) {
+		super();
 		this.sessionFactory=sessionFactory;
 	}
 	public CartItem get(int id) {
@@ -43,7 +57,7 @@ public class CartItemDaoImpl implements CartItemDao {
 		}
 	}
 
-	public boolean update(CartItem cartItem) {
+	/*public boolean update(CartItem cartItem) {
 		try {
 			// adding category to database
 			sessionFactory.getCurrentSession().update(cartItem);
@@ -54,7 +68,14 @@ public class CartItemDaoImpl implements CartItemDao {
 			return false;
 		}
 	}
-
+*/
+	public void update(CartItem cartItem)
+	{
+		Session session= sessionFactory.openSession();
+		session.beginTransaction();
+		session.update(cartItem);
+		session.getTransaction().commit();
+	}
 	public void delete(int id) {
 		
 	
@@ -82,18 +103,44 @@ public class CartItemDaoImpl implements CartItemDao {
 		q.executeUpdate();
 	}
 
-	public CartItem getCartItemByCartIdAndProductId(int cartId, int productid) {
+	public CartItem getCartItemByCartIdAndProductId(int cartId, int pid) {
 	System.out.println("entering getCartItemByCartIdAndProductId ");
-		try{
-		Query q=sessionFactory.getCurrentSession().createQuery("From CartItem where cart_id=:cartid and product_id=:proid");
+	String selectQuery = "From CartItem where id=:cartId  and pid=:pid";
+	
+	Query query = sessionFactory.openSession().createQuery(selectQuery);
+	
+	query.setParameter("cartId",cartId);
+	System.out.println("setting acart id and pid");
+	query.setParameter("pid", pid);
+	System.out.print("18/2 cartid=="+cartId+" pid "+pid+"\n");
+	List<CartItem> cartItems = query.getResultList();
+	System.out.println(query.getResultList());
+	if(cartItems != null && !cartItems.isEmpty()){
+		System.out.println("enteriny if");
+		return cartItems.get(0);
+	}
+	System.out.println("entering null in cartitem");
+	return null;
+	/*try{
+			System.out.println("18/02 entering try");
+			Query q=sessionFactory.openSession().createQuery("From CartItem where id=:cartId  and pid=:pid")
+			return (CartItem) sessionFactory.getCurrentSession().createQuery("From CartItem where id=:cartId  and pid=:pid").getSingleResult();
+		System.out.print("18/2 cartid==");
 		q.setParameter("cartId", cartId);
-		q.setParameter("proid", productid);
-		
+		System.out.println(cartId);
+		q.setParameter("pid", pid);
+		System.out.println("pid ="+pid);
+		return (CartItem) sessionFactory.getCurrentSession().createQuery("FROM CartItem  WHERE userid=: userId and productid=: productId").getResultList();
+ 		return (CartItem) sessionFactory.getCurrentSession().createQuery("from CartItem where userid =: userId").setParameter("user", userId).getSingleResult();
+	
+		CartItem carti=(CartItem) q.getSingleResult();
+		System.out.println("18/2 cartitem= "+carti);
 		return (CartItem)q.getSingleResult();
 		}catch(Exception e)
 		{
+			System.out.println("18/02 entering exception");
 			return null;
-		}
+		}*/
 	}
 
 	public boolean deleteAllCartItems(int cartid) {
@@ -113,13 +160,5 @@ public class CartItemDaoImpl implements CartItemDao {
 			}
 		
 	}
-	public void insertCartItem(CartItem cartItem) {
-		/*public void insertCartItem(CartItem cartItem)
-		{*/
-			Session session= sessionFactory.openSession();
-			session.beginTransaction();
-			session.persist(cartItem);
-			session.getTransaction().commit();
-		/*}*/
-	}
+	
 }

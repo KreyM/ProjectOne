@@ -29,8 +29,8 @@ public class Cart implements Serializable
 	/*@JoinColumn(name="email")	*/
 	private User user;
 
-	@OneToMany(fetch=FetchType.EAGER)
-	@JoinColumn(name="id")
+	@OneToMany(targetEntity=CartItem.class, fetch=FetchType.EAGER, mappedBy="cart")
+	/*@JoinColumn(name="itemId")*/
 	private Set<CartItem> cartItem=new HashSet<CartItem>();
 
 	/*public Cart(int cartId, User cartUserDetails, double cartPrice, int cartStock )

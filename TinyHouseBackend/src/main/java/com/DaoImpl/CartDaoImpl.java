@@ -19,14 +19,17 @@ public class CartDaoImpl implements CartDao
 {
 	@Autowired
 	SessionFactory sessionFactory;
-
+	
+	
 	public void insertCart(Cart cart) 
 	{
-		System.out.println("1 insercart");
+		
 		Session session=sessionFactory.openSession();
-		System.out.println("2 insercart");
+		session.beginTransaction();
+		
 		session.saveOrUpdate(cart);	
-		System.out.println("3 insercart");
+		System.out.println(" insertcart complete");
+		session.getTransaction().commit();
 		
 	}
 	@Autowired
@@ -81,10 +84,12 @@ public class CartDaoImpl implements CartDao
 	
 	public void updateCart(Cart cr)
 	{
-		Session session= sessionFactory.openSession();
+		Session session= sessionFactory.getCurrentSession();
 		session.beginTransaction();
+		System.out.println("cartdaoimple : update cart: session.beginTransaction();");
 		session.update(cr);
 		session.getTransaction().commit();
+		System.out.println("uppdatecart over");
 	}
 
 }

@@ -48,10 +48,31 @@ public class CartController
 		private User user;
 		CartItem cartItem = new CartItem();
 		
-		@RequestMapping(value = "/user/viewcart")
-		public String userviewcart(Principal principal, Model model) {
+		/*mee:*/ @RequestMapping(value="/goToCart" , method=RequestMethod.GET)
+		
+		 public ModelAndView goToCart( HttpServletRequest req)
+		{ 
+			 System.out.println("entering goTOCart in the CartController");
+	    
+	        ModelAndView mv= new ModelAndView();
+			Principal principal=req.getUserPrincipal();
+			String userEmail= principal.getName();
+			System.out.println("fetching userEmail n the goToCart");
+			mv.addObject("cartInfo",cartDaoImpl.findByCartID(userEmail));
+			 mv.setViewName("cart");
+			 System.out.println("exiting goToCart");
+		return mv;
 
-			if (principal != null) {
+		}
+		 
+		@RequestMapping(value ="/user/viewcart")
+		public String userviewcart(Principal principal, Model model) {
+			
+			if (principal == null)
+			{
+				return "login";
+			}
+			else{
 				user=userDaoImpl.findUserByEmail(principal.getName());
 			
 
@@ -73,46 +94,80 @@ public class CartController
 			 mv.setViewName("cart");
 			 return mv;
 		 }*/
+/*	bhayyasaheb code
+
 	
-	 
-	 @RequestMapping(value="/addToCart/{pid}")
-	 public String addtocart(@PathVariable("pid")int pid, Principal principal, Model model) {
-System.out.println("path way entry");
-		Product product = productDaoImpl.findByPID(pid);//get(pid);
-			User user = userDaoImpl.findUserByEmail(principal.getName());
-			Cart cart = user.getCart();
+	@RequestMapping(value="/cart/add/{id}/product")
+	public String addCartItem(@PathVariable("id") int productId, Principal principal)
+	{
+		String url = null;
+		
+		user = userDAO.getByEmail(principal.getName());
+		product = productDAO.get(productId);
+		
+		//Set<CartItems> cartItem = new HashSet<>();
+		
+		cart = user.getCart();
+		
+		boolean flag = cartItemDAO.existingCartItem(product.getId(), cart.getId());
+		
+		if(product.getQuantity() != 0)
+		{
+			// if product does not exist in the cart then add it as a new product
 			
-			CartItem cartItem = cartItemDaoImpl.getCartItemByCartIdAndProductId(cart.getId(), product.getPid());
-			Set<CartItem> cartItems = null;
-			if (cartItem == null) {
-				cartItem = new CartItem();
-				cartItem.setCart(cart);
-				cartItem.setProduct(product);
-				cartItem.setQuantity(1);
-				cartItem.setTotalPrice(product.getPrice());
-				cart.setGrandTotal(cart.getGrandTotal() + product.getPrice());
-				cart.setTotalItems(cart.getTotalItems() + 1);
-				cartItems = new HashSet<CartItem>();
-				cartItems.add(cartItem);
-				cart.setCartItem(cartItems);
-				cartDaoImpl.updateCart(cart);
+			if(flag != true)
+			{
+				cartItems.setProduct(product);
+				cartItems.setQuantity(1); // default quantity
+				cartItems.setPrice(product.getUnitPrice());
+				cartItems.setTotalAmount(cartItems.getPrice() * cartItems.getQuantity());
+				cartItems.setCart(cart);
 				
-			} else {
-				System.out.println("entering into else");
-				cartItem.setQuantity(cartItem.getQuantity() + 1);
-				cartItem.setTotalPrice(cartItem.getTotalPrice() + product.getPrice());
-				cartItem.getCart().setGrandTotal(cart.getGrandTotal() + product.getPrice());
-				cartItem.getCart().setTotalItems(cart.getTotalItems() + 1);
-				cartItemDaoImpl.update(cartItem);
+				//cartItem.add(cartItems);
+				cartItemDAO.addCartItems(cartItems);
+				product.setQuantity(product.getQuantity() - 1);
+				productDAO.update(product);
+				cart.setNoOfCartItems(cart.getNoOfCartItems() + cartItems.getQuantity());
+				cart.setGrandTotal(cart.getGrandTotal() + cartItems.getTotalAmount() );
+				userDAO.updateCart(cart);
+				
+				url ="redirect:/cart?op=add&status=success";
+							
+			}
+			else
+			{
+				// if product already exist increment quantity by 1
+				
+				CartItems exitItem = cartItemDAO.getById(product.getId(), cart.getId());
+				exitItem.setQuantity(exitItem.getQuantity() +1);
+			
+				exitItem.setTotalAmount(exitItem.getTotalAmount() + product.getUnitPrice());
+				
+				
+				
+				cartItemDAO.updateCartItems(exitItem);
+				
+				product.setQuantity(product.getQuantity() - 1);
+				productDAO.update(product);
+				
+				//cart.setNoOfCartItems(cart.getNoOfCartItems() + cartItems.getQuantity());
+				cart.setGrandTotal(cart.getGrandTotal() + product.getUnitPrice());
+				
+				userDAO.updateCart(cart);
+				
+				url ="redirect:/cart?op=add&status=success";
 			}
 			
-
-			
-		
-
-			return "redirect:/cart";
-
 		}
+		else
+		{
+			url = "redirect:/cart?op=add&status=failure";
+		}
+		
+		return url;
+	}*/
+	 
+	 
 	/* @RequestMapping(value="/addToCart", method=RequestMethod.POST)
 	 public ModelAndView addtocart(HttpServletRequest request)
 	 {
@@ -231,20 +286,7 @@ System.out.println("path way entry");
 		 return "ack";
 	 }
 	 
-	 @RequestMapping(value="/goToCart" , method=RequestMethod.GET)
-		
-	 public ModelAndView goToCart( HttpServletRequest req)
-	{ 
-    
-        ModelAndView mv= new ModelAndView();
-		Principal principal=req.getUserPrincipal();
-		String userEmail= principal.getName();
-		mv.addObject("cartInfo",cartDaoImpl.findByCartID(userEmail));
-		 mv.setViewName("cart");
-	return mv;
-
-	}
-	 
+	
 	 @RequestMapping(value="/deleteCart/{cartId }")
 	 public ModelAndView deleteCartItem(@PathVariable("cartId")int cartId, HttpServletRequest req)
 	 {
@@ -263,204 +305,3 @@ System.out.println("path way entry");
 
 
 }
-/*package com.controller;
-
-
-import java.security.Principal;
-import java.util.List;
-
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import com.DaoImpl.*;
-import com.model.*;
-
-@Controller
-public class CartController 
-{
-
-	@Autowired 
-	 SupplierDaoImpl supplierDaoImpl;
-	 
-	 @Autowired
-	 CategoryDaoImpl categoryDaoImpl;
-	 
-	 @Autowired
-	 ProductDaoImpl productDaoImpl ;
-	 
-	 @Autowired
-	 CartDaoImpl cartDaoImpl;
-	 
-	 @Autowired
-	 OrdersDaoImpl ordersDaoImpl;
-	 
-	 @Autowired
-	 UserDaoImpl userDaoImpl;
-	 
-	 @RequestMapping(value="/prodDetails/{pid}")
-	 public ModelAndView prodDet (@PathVariable("pid")int pid)
-	 {
-		 System.out.println("entered prod details");
-		 ModelAndView mv=new ModelAndView();
-		 Product prod= productDaoImpl.findByPID(pid);
-		 mv.addObject("prod", prod);
-		 mv.setViewName("productDetails");
-		 return mv;
-	 }
-	
-	 
-	 @RequestMapping(value="/addToCart", method=RequestMethod.POST)
-	 public ModelAndView addtocart(HttpServletRequest request)
-	 {
-		 ModelAndView mv=new ModelAndView();
-		 Principal principal =request.getUserPrincipal();
-		 String userEmail=principal.getName();
-		 //
-		 try
-		 {
-			 User user=(User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			 
-			 String email=user.getEmail();
-			 
-			 System.out.println("hello");
-			 int pid =Integer.parseInt(request.getParameter("pid"));
-					 //Integer.parseInt(request.getParameter("pid"));
-			 System.out.println(pid);
-			 Double price=Double.parseDouble(request.getParameter("price"));
-			 int qty=Integer.parseInt(request.getParameter("pQty"));
-			 System.out.println("cart entery 2");
-			 String pname=request.getParameter("pname");
-			 String imgName=request.getParameter("imgName");
-			 System.out.println(imgName);
-			 Cart cartExist= cartDaoImpl.getCartById(pid, userEmail);//(pid,userEmail);
-			 System.out.println("cart entery 21");
-			 if(cartExist==null)
-			 {
-				 System.out.println("cart entery 3");
-				 Cart cm=new Cart();
-				 cm.setCartPrice(price);
-				 cm.setCartProductId(pid);
-				 cm.setCartStock(qty);
-				 cm.setCartImage(imgName);
-				 cm.setCartProductName(pname);
-			 
-				 User u=userDaoImpl.findUserByEmail(userEmail);
-				 cm.setCartUserDetails(u);
-				 cartDaoImpl.insertCart(cm);
-			 }
-			 else if(cartExist!=null)
-			 {
-				 Cart cm=new Cart();
-				 cm.setCartId(cartExist.getCartId());
-				 cm.setCartPrice(price);
-				 cm.setCartProductId(pid);
-				 cm.setCartStock(cartExist.getCartStock()+qty);
-				 cm.setCartImage(imgName);
-				 cm.setCartProductName(pname);
-			 
-				 User u=userDaoImpl.findUserByEmail(userEmail);
-				 cm.setCartUserDetails(u);
-				 cartDaoImpl.updateCart(cm);
-				 
-			 }
-			 mv.addObject("cartInfo", cartDaoImpl.findByCartID(userEmail));
-			 mv.setViewName("cart");
-			 return mv;
-		 }
-		 catch (Exception e) 
-		 {
-			 e.printStackTrace();
-			 System.out.println("adding cart not successful");
-			 mv.addObject("cartInfo", cartDaoImpl.findByCartID(userEmail));
-			 mv.setViewName("cart");
-			 return mv;
-		}
-		 
-	 }
-	 
-	 @RequestMapping(value="/checkout" , method=RequestMethod.GET)
-		
-	 public ModelAndView goToCheckout( HttpServletRequest req)
-	{ 
-    
-        ModelAndView mv= new ModelAndView();
-		Principal principal=req.getUserPrincipal();
-		String userEmail= principal.getName();
-		User u=userDaoImpl.findUserByEmail(userEmail);
-		 List<Cart> cart=cartDaoImpl.findByCartID(userEmail);
-		 mv.addObject("user",u);
-		 mv.addObject("cart",cart);
-		 
-	return mv;
-
-	}
-
-	 @RequestMapping(value="/orderProcess" , method=RequestMethod.POST)
-		 public ModelAndView orderProcess(HttpServletRequest req)
-		{ 
-	    
-            ModelAndView mv= new ModelAndView("ack");
-			Orders ord=new Orders();
-			Principal principal=req.getUserPrincipal();
-			String userEmail= principal.getName();
-			List<Cart> cart= cartDaoImpl.findByCartID(userEmail);
-			User u=userDaoImpl.findUserByEmail(userEmail);
-			 Double total= Double.parseDouble(req.getParameter("total"));
-			 String payment =req.getParameter(userEmail);
-			 ord.setUser(u);
-			 ord.setPayment(payment);
-			 ord.setTotal(total);
-			 ordersDaoImpl.insertOrder(ord);
-             mv.addObject("orderDetails",u);
-             mv.addObject("u",userDaoImpl.findUserByEmail(userEmail));
-             mv.addObject("cart",cart);
-             //mv.setViewName("ack");
-			 return mv;
-	
-		}
-	 
-	 @RequestMapping("/ack")
-	 public String ack()
-	 {
-		 return "ack";
-	 }
-	 
-	 @RequestMapping(value="/goToCart" , method=RequestMethod.GET)
-		
-	 public ModelAndView goToCart( HttpServletRequest req)
-	{ 
-    
-        ModelAndView mv= new ModelAndView();
-		Principal principal=req.getUserPrincipal();
-		String userEmail= principal.getName();
-		mv.addObject("cartInfo",cartDaoImpl.findByCartID(userEmail));
-		 mv.setViewName("cart");
-	return mv;
-
-	}
-	 
-	 @RequestMapping(value="/deleteCart/{cartId }")
-	 public ModelAndView deleteCartItem(@PathVariable("cartId")int cartId, HttpServletRequest req)
-	 {
-
-	        ModelAndView mv= new ModelAndView();
-			Principal principal=req.getUserPrincipal();
-			String userEmail= principal.getName();
-			cartDaoImpl.deleteCart(cartId);
-			mv.addObject("cartInfo",cartDaoImpl.findByCartID(userEmail));
-			mv.setViewName("cart");
-			return mv;
-			
-	 }
-	 
-	 
-
-
-}
-*/
